@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace PizzaBotGG.App.ApiClients.CatApi
 {
@@ -6,5 +7,8 @@ namespace PizzaBotGG.App.ApiClients.CatApi
 	{
 		[JsonPropertyName("url")]
 		public string Url { get; set; }
+
+		[JsonPropertyName("breeds")]
+		public List<BreedResponse> Breeds { get; set; }
 	}
 }

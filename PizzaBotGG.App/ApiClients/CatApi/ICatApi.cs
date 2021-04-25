@@ -10,7 +10,7 @@ namespace PizzaBotGG.App.ApiClients.CatApi
 	public interface ICatApi
 	{
 		[Get("images/search")]
-		Task<List<CatResponse>> SearchCats([Query("format")] string format = "json", [Query("breed_id")] string breedId = null);
+		Task<List<CatResponse>> SearchCats([Query("format")] string format = "json", [Query("breed_id")] string breedId = null, [Query("mime_types")] string[] mimeTypes = null);
 
 		[Get("breeds/search")]
 		Task<List<BreedResponse>> SearchBreeds([Query("q")] string name);

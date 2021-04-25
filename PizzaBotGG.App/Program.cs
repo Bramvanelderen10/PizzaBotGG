@@ -29,7 +29,7 @@ namespace PizzaBotGG.App
 
             var commandConfiguration = new CommandsNextConfiguration
             {
-                StringPrefixes = new[] { "/", "/cat" },
+                StringPrefixes = new[] { "/" },
                 Services = GetServiceProvider()
             };
 
