@@ -1,5 +1,8 @@
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
+using Microsoft.Extensions.DependencyInjection;
+using PizzaBotGG.App.ApiClients.CatApi;
+using RestEase;
 using System.Reflection;
 using System.Threading.Tasks;
 
@@ -22,10 +25,12 @@ namespace PizzaBotGG.App
             };
 
             var discordClient = new DiscordClient(discordConfiguration);
+            
+
             var commandConfiguration = new CommandsNextConfiguration
             {
                 StringPrefixes = new[] { "/", "/cat" },
-                
+                Services = GetServiceProvider()
             };
 
             var commandsNext = discordClient.UseCommandsNext(commandConfiguration);
@@ -33,5 +38,16 @@ namespace PizzaBotGG.App
             await discordClient.ConnectAsync();
             await Task.Delay(-1);
 		}
+
+        static ServiceProvider GetServiceProvider()
+		{
+            var services = new ServiceCollection();
+
+            var catApi = RestClient.For<ICatApi>("https://api.thecatapi.com/v1/");
+            services.AddSingleton(catApi);
+            var serviceProvider = services.BuildServiceProvider();
+
+            return serviceProvider;
+        }
 	}
 }

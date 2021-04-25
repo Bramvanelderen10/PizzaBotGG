@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PizzaBotGG.App.Music
+namespace PizzaBotGG.App.Modules.Music
 {
 	class MusicModule
 	{
