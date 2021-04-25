@@ -350,3 +350,4 @@ MigrationBackup/
 .ionide/
 src/FenetreVault.API/Configuration/User/
 dependabot/Dockerfile
+PizzaBotGG.App/Configuration/User/
