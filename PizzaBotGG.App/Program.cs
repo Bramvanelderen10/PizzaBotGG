@@ -1,5 +1,7 @@
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
+using DSharpPlus.Lavalink;
+using DSharpPlus.Net;
 using DSharpPlus.VoiceNext;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,7 +26,7 @@ namespace PizzaBotGG.App
 		{
             var applicationConfiguration = GetConfiguration();
             var discordSettings = applicationConfiguration.GetSection(nameof(DiscordSettings)).Get<DiscordSettings>();
-            var googleSettings = applicationConfiguration.GetSection(nameof(GoogleSettings)).Get<GoogleSettings>();
+            var lavalinkSettings = applicationConfiguration.GetSection(nameof(LavalinkSettings)).Get<LavalinkSettings>();
 
             var discordConfiguration = new DiscordConfiguration()
             {
@@ -38,7 +40,7 @@ namespace PizzaBotGG.App
 
             var commandConfiguration = new CommandsNextConfiguration
             {
-                StringPrefixes = new[] { "/" },
+                StringPrefixes = new[] { "/", "$" },
                 Services = GetServiceProvider(),
 
                 // enable responding in direct messages
@@ -48,9 +50,22 @@ namespace PizzaBotGG.App
             var commandsNext = discordClient.UseCommandsNext(commandConfiguration);
             commandsNext.RegisterCommands(Assembly.GetEntryAssembly());
 
-			discordClient.UseVoiceNext();
+            var endpoint = new ConnectionEndpoint
+            {
+                Hostname = "127.0.0.1",
+                Port = 2333
+            };
 
+            var lavalinkConfig = new LavalinkConfiguration
+            {
+                Password = lavalinkSettings.Password,
+                RestEndpoint = endpoint,
+                SocketEndpoint = endpoint
+            };
+
+            var lavalink = discordClient.UseLavalink();
             await discordClient.ConnectAsync();
+            await lavalink.ConnectAsync(lavalinkConfig);
             await Task.Delay(-1);
 		}
 
