@@ -1,0 +1,16 @@
+﻿[*.cs]
+
+# IDE0011: Add braces
+csharp_prefer_braces = true:none
+
+# IDE0039: Use local function
+csharp_style_pattern_local_over_anonymous_function = true:none
+dotnet_naming_rule.private_members_with_underscore.symbols  = private_fields
+dotnet_naming_rule.private_members_with_underscore.style    = prefix_underscore
+dotnet_naming_rule.private_members_with_underscore.severity = suggestion
+
+dotnet_naming_symbols.private_fields.applicable_kinds           = field
+dotnet_naming_symbols.private_fields.applicable_accessibilities = private
+
+dotnet_naming_style.prefix_underscore.capitalization = camel_case
+dotnet_naming_style.prefix_underscore.required_prefix = _
