@@ -348,6 +348,5 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
-src/FenetreVault.API/Configuration/User/
 dependabot/Dockerfile
-PizzaBotGG.App/Configuration/User/
+src/PizzaBotGG.App/Configuration/User/
