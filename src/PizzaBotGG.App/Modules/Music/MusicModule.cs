@@ -13,7 +13,7 @@ namespace PizzaBotGG.App.Modules.Music
 {
 	public class MusicModule : BaseCommandModule
 	{
-		[Command("play")]
+		[Command]
 		public async Task Play(CommandContext context, [RemainingText] string search)
 		{
 			if (string.IsNullOrWhiteSpace(search))
@@ -75,5 +75,63 @@ namespace PizzaBotGG.App.Modules.Music
 
 			await context.RespondAsync($"Now playing {track.Title}!");
 		}
+
+		[Command]
+		public async Task Pause(CommandContext ctx)
+		{
+			if (ctx.Member.VoiceState == null || ctx.Member.VoiceState.Channel == null)
+			{
+				await ctx.RespondAsync("You are not in a voice channel.");
+				return;
+			}
+
+			var lava = ctx.Client.GetLavalink();
+			var node = lava.ConnectedNodes.Values.First();
+			var conn = node.GetGuildConnection(ctx.Member.VoiceState.Guild);
+
+			if (conn == null)
+			{
+				await ctx.RespondAsync("Lavalink is not connected.");
+				return;
+			}
+
+			if (conn.CurrentState.CurrentTrack == null)
+			{
+				await ctx.RespondAsync("There are no tracks loaded.");
+				return;
+			}
+
+			await conn.PauseAsync();
+		}
+
+		[Command]
+		public async Task Unpause(CommandContext ctx)
+		{
+			if (ctx.Member.VoiceState == null || ctx.Member.VoiceState.Channel == null)
+			{
+				await ctx.RespondAsync("You are not in a voice channel.");
+				return;
+			}
+
+			// TODO generic validation / checks?
+			var lava = ctx.Client.GetLavalink();
+			var node = lava.ConnectedNodes.Values.First();
+			var conn = node.GetGuildConnection(ctx.Member.VoiceState.Guild);
+
+			if (conn == null)
+			{
+				await ctx.RespondAsync("Lavalink is not connected.");
+				return;
+			}
+
+			if (conn.CurrentState.CurrentTrack == null)
+			{
+				await ctx.RespondAsync("There are no tracks loaded.");
+				return;
+			}
+
+			await conn.ResumeAsync();
+		}
+
 	}
 }

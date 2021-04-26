@@ -28,6 +28,9 @@
     <None Update="Configuration\appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Configuration\User\appsettings.AlurenQQ.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Configuration\User\appsettings.bramv.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
