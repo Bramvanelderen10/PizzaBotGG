@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using PizzaBotGG.App.Modules.Cat.Api;
+using PizzaBotGG.App.Modules.Cat.Services;
 using RestEase;
 
 namespace PizzaBotGG.App.Modules.Cat.Extensions
@@ -10,7 +11,7 @@ namespace PizzaBotGG.App.Modules.Cat.Extensions
 		{
 			var catApi = RestClient.For<ICatApi>("https://api.thecatapi.com/v1/");
 			services.AddSingleton(catApi);
-
+			services.AddTransient<ICatService, CatService>();
 			return services;
 		}
 	}
