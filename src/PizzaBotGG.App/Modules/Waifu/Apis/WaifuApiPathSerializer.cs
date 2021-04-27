@@ -1,11 +1,7 @@
 ﻿using RestEase;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace PizzaBotGG.App.Modules.Waifu.Api
+namespace PizzaBotGG.App.Modules.Waifu.Apis
 {
 	public class WaifuApiPathSerializer : RequestPathParamSerializer
 	{

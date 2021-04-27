@@ -2,7 +2,7 @@
 using PizzaBotGG.App.Modules.Waifu.Enums;
 using System.Threading.Tasks;
 
-namespace PizzaBotGG.App.Modules.Waifu.Service
+namespace PizzaBotGG.App.Modules.Waifu.Services
 {
 	public interface IWaifuService
 	{

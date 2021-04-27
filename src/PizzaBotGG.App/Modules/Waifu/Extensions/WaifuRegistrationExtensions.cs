@@ -1,12 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using PizzaBotGG.App.Modules.Waifu.Api;
-using PizzaBotGG.App.Modules.Waifu.Service;
+using PizzaBotGG.App.Modules.Waifu.Apis;
+using PizzaBotGG.App.Modules.Waifu.Services;
 using RestEase;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PizzaBotGG.App.Modules.Waifu.Extensions
 {

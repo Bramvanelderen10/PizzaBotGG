@@ -1,11 +1,7 @@
 ﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
-using DSharpPlus.Entities;
-using PizzaBotGG.App.Modules.Waifu.Api;
 using PizzaBotGG.App.Modules.Waifu.Enums;
-using PizzaBotGG.App.Modules.Waifu.Service;
-using PizzaBotGG.App.Services;
-using System;
+using PizzaBotGG.App.Modules.Waifu.Services;
 using System.Threading.Tasks;
 
 namespace PizzaBotGG.App.Modules.Waifu

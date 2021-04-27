@@ -2,7 +2,7 @@
 using RestEase;
 using System.Threading.Tasks;
 
-namespace PizzaBotGG.App.Modules.Waifu.Api
+namespace PizzaBotGG.App.Modules.Waifu.Apis
 {
 	public interface IWaifuAPI
 	{

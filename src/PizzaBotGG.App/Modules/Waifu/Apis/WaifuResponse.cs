@@ -1,4 +1,4 @@
-﻿namespace PizzaBotGG.App.Modules.Waifu.Api
+﻿namespace PizzaBotGG.App.Modules.Waifu.Apis
 {
 	public class WaifuResponse
 	{

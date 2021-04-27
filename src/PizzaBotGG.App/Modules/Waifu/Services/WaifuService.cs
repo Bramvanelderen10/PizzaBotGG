@@ -1,12 +1,12 @@
 ﻿using DSharpPlus.Entities;
 using PizzaBotGG.App.ExceptionHandling;
-using PizzaBotGG.App.Modules.Waifu.Api;
+using PizzaBotGG.App.Modules.Waifu.Apis;
 using PizzaBotGG.App.Modules.Waifu.Enums;
 using PizzaBotGG.App.Services;
 using System;
 using System.Threading.Tasks;
 
-namespace PizzaBotGG.App.Modules.Waifu.Service
+namespace PizzaBotGG.App.Modules.Waifu.Services
 {
 	public class WaifuService : IWaifuService
 	{
