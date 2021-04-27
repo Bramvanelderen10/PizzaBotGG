@@ -1,11 +1,14 @@
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
+using DSharpPlus.CommandsNext.Converters;
+using DSharpPlus.Entities;
 using DSharpPlus.Lavalink;
 using DSharpPlus.Net;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PizzaBotGG.App.ExceptionHandling;
 using PizzaBotGG.App.Modules.Cat.Extensions;
+using PizzaBotGG.App.Modules.Waifu.Enums;
 using PizzaBotGG.App.Modules.Waifu.Extensions;
 using PizzaBotGG.App.Services;
 using PizzaBotGG.App.Settings;
@@ -49,8 +52,9 @@ namespace PizzaBotGG.App
             };
 
             var commandExceptionHandler = new CommandExceptionHandler();
-
             var commandsNext = discordClient.UseCommandsNext(commandConfiguration);
+
+            commandsNext.RegisterWaifuConverters();
             commandsNext.RegisterCommands(Assembly.GetEntryAssembly());
 			commandsNext.CommandErrored += commandExceptionHandler.HandleCommandException;
 

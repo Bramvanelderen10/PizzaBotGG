@@ -24,6 +24,12 @@ namespace PizzaBotGG.App.Modules.Waifu
 			await context.RespondAsync(embed);
 		}
 
+		[Command("categories")]
+		public async Task WaifuCategoriesCommand(CommandContext context, string categoryName = null)
+		{
+			string response = await _waifuService.GetSFWWaifuCategories(categoryName);
+		}
+
 		[Command("nsfw")]
 		public async Task WaifuNSFWImageCommand(CommandContext context, WaifuNSFWCategory? category = null)
 		{

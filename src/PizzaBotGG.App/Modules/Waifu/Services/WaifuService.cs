@@ -24,16 +24,23 @@ namespace PizzaBotGG.App.Modules.Waifu.Services
 		public async Task<DiscordEmbed> GetNSFWWaifuEmbed(WaifuNSFWCategory? category = null)
 		{
 			var waifuCategory = category ?? GetRandomCategory<WaifuNSFWCategory>();
-			var waifuResponse = await _waifuApi.GetNSFWWaifu(waifuCategory);
-			return GetWaifuEmbed(waifuResponse);
+			var waifuType = WaifuType.NSFW;
+			return await GetWaifuEmbed(waifuCategory, waifuType);
 		}
 
 		public async Task<DiscordEmbed> GetSFWWaifuEmbed(WaifuSFWCategory? category = null)
 		{
-			var waifuCategory = category ?? GetRandomCategory<WaifuSFWCategory>();
+			var waifuCategory = category ?? WaifuSFWCategory.Waifu;
+			var waifuType = WaifuType.SFW;
+			return await GetWaifuEmbed(waifuCategory, waifuType);
+		}
+
+		private async Task<DiscordEmbed> GetWaifuEmbed<TWaifuCategory>(TWaifuCategory waifuCategory, WaifuType waifuType)
+			where TWaifuCategory : struct, Enum
+		{
 			try
 			{
-				var waifuResponse = await _waifuApi.GetSFWWaifu(waifuCategory);
+				var waifuResponse = await _waifuApi.GetWaifu(waifuType, waifuCategory);
 				return GetWaifuEmbed(waifuResponse);
 			}
 			catch (RestEase.ApiException apiException)
@@ -45,6 +52,11 @@ namespace PizzaBotGG.App.Modules.Waifu.Services
 
 				throw;
 			}
+		}
+
+		public Task<string> GetSFWWaifuCategories(string categoryName)
+		{
+			throw new NotImplementedException();
 		}
 
 		private static DiscordEmbed GetWaifuEmbed(WaifuResponse waifuResponse)
@@ -63,5 +75,7 @@ namespace PizzaBotGG.App.Modules.Waifu.Services
 			var randomIndex = _randomService.Random(0, categories.Length - 1);
 			return categories[randomIndex];
 		}
+
+		
 	}
 }

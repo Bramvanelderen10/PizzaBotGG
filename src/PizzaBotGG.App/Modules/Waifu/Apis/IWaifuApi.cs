@@ -1,15 +1,16 @@
 ﻿using PizzaBotGG.App.Modules.Waifu.Enums;
 using RestEase;
+using System;
 using System.Threading.Tasks;
 
 namespace PizzaBotGG.App.Modules.Waifu.Apis
 {
 	public interface IWaifuAPI
 	{
-		[Get("sfw/{category}")]
-		Task<WaifuResponse> GetSFWWaifu([Path("category", PathSerializationMethod.Serialized)] WaifuSFWCategory category);
-
-		[Get("nsfw/{category}")]
-		Task<WaifuResponse> GetNSFWWaifu([Path("category", PathSerializationMethod.Serialized)] WaifuNSFWCategory category);
+		[Get("{type}/{category}")]
+		Task<WaifuResponse> GetWaifu<TWaifuCategory>(
+			[Path("type", PathSerializationMethod.Serialized)]WaifuType type, 
+			[Path("category", PathSerializationMethod.Serialized)] TWaifuCategory category)
+			where TWaifuCategory : struct, Enum;
 	}
 }
