@@ -2,13 +2,10 @@
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using MimeTypes;
-using PizzaBotGG.App.ApiClients.CatApi;
+using PizzaBotGG.App.Modules.Cat.Api;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace PizzaBotGG.App.Modules.Image

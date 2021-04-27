@@ -2,10 +2,12 @@ using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.Lavalink;
 using DSharpPlus.Net;
-using DSharpPlus.VoiceNext;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using PizzaBotGG.App.ApiClients.CatApi;
+using PizzaBotGG.App.ExceptionHandling;
+using PizzaBotGG.App.Modules.Cat.Extensions;
+using PizzaBotGG.App.Modules.Waifu.Extensions;
+using PizzaBotGG.App.Services;
 using PizzaBotGG.App.Settings;
 using RestEase;
 using System;
@@ -36,7 +38,6 @@ namespace PizzaBotGG.App
             };
 
             var discordClient = new DiscordClient(discordConfiguration);
-            
 
             var commandConfiguration = new CommandsNextConfiguration
             {
@@ -47,8 +48,11 @@ namespace PizzaBotGG.App
                 EnableDms = true,
             };
 
+            var commandExceptionHandler = new CommandExceptionHandler();
+
             var commandsNext = discordClient.UseCommandsNext(commandConfiguration);
             commandsNext.RegisterCommands(Assembly.GetEntryAssembly());
+			commandsNext.CommandErrored += commandExceptionHandler.HandleCommandException;
 
             var endpoint = new ConnectionEndpoint
             {
@@ -69,18 +73,18 @@ namespace PizzaBotGG.App
             await Task.Delay(-1);
 		}
 
-        static ServiceProvider GetServiceProvider()
+		static ServiceProvider GetServiceProvider()
 		{
             var services = new ServiceCollection();
+            services.AddWaifuModule();
+            services.AddCatModule();
+            services.AddSingleton<IRandomService, RandomService>();
 
-            var catApi = RestClient.For<ICatApi>("https://api.thecatapi.com/v1/");
-            services.AddSingleton(catApi);
             var serviceProvider = services.BuildServiceProvider();
-
             return serviceProvider;
         }
 
-        static IConfiguration GetConfiguration()
+		static IConfiguration GetConfiguration()
 		{
             var configurationBuilder = new ConfigurationBuilder();
 

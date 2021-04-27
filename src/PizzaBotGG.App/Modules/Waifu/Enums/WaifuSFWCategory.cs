@@ -1,0 +1,36 @@
+﻿namespace PizzaBotGG.App.Modules.Waifu.Enums
+{
+	public enum WaifuSFWCategory
+	{
+		Waifu,
+		Neko,
+		Shinobu,
+		Megumin,
+		Bully,
+		Cuddle,
+		Cry,
+		Hug,
+		Awoo,
+		Kiss,
+		Lick,
+		Pat,
+		Smug,
+		Bonk,
+		Yeet,
+		Blush,
+		Smile,
+		Wave,
+		Highfive,
+		Handhold,
+		Nom,
+		Bite,
+		Glomp,
+		Kill,
+		Slap,
+		Happy,
+		Wink,
+		Poke,
+		Dance,
+		Cringe,
+	}
+}

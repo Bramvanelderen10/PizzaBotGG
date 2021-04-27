@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PizzaBotGG.App.ApiClients.CatApi
+namespace PizzaBotGG.App.Modules.Cat.Api
 {
 	public interface ICatApi
 	{

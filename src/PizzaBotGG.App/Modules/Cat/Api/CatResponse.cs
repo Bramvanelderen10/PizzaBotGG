@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace PizzaBotGG.App.ApiClients.CatApi
+namespace PizzaBotGG.App.Modules.Cat.Api
 {
 	public class CatResponse
 	{
