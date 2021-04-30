@@ -1,9 +1,0 @@
-version: "3.9"
-services:
-  pizzabotgg:
-    build: ./src/.
-    network_mode: host
-  lavalink:
-    build: ./tools/Lavalink/.
-    network_mode: host
-  
