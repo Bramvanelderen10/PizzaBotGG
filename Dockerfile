@@ -1,7 +1,6 @@
 FROM mcr.microsoft.com/dotnet/sdk:5.0-focal AS build
 
-RUN apt-get update \
-    && apt-get install -y default-jre
+
 
 WORKDIR /source
 
@@ -21,10 +20,13 @@ RUN dotnet publish -c release -o /app -r linux-x64 --self-contained true --no-re
 FROM mcr.microsoft.com/dotnet/runtime-deps:5.0-focal-amd64
 WORKDIR /app
 COPY --from=build /app ./
-COPY start-bot.sh ./run.sh
+COPY start-bot.sh ./start-bot.sh
 
 COPY tools/Lavalink/Lavalink.jar Lavalink.jar
 COPY tools/Lavalink/application.yml application.yml
 EXPOSE 2333
 
-ENTRYPOINT ["./run.sh"]
+RUN apt-get update \
+    && apt-get install -y default-jre
+
+ENTRYPOINT ["./start-bot.sh"]
