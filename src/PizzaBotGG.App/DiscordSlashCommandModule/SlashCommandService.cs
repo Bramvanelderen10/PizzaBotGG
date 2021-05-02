@@ -1,10 +1,11 @@
 ﻿using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
-using DSharpPlus.Entities;
+using Microsoft.Extensions.DependencyInjection;
+using PizzaBotGG.App.DiscordSlashCommandModule.Interfaces;
 using PizzaBotGG.App.DiscordSlashCommandModule.Models;
 using PizzaBotGG.App.DiscordSlashCommandModule.Utilities;
-using System;
+using PizzaBotGG.App.ExceptionHandling;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -15,13 +16,21 @@ namespace PizzaBotGG.App.DiscordSlashCommandModule
 	public class SlashCommandService
 	{
 		private readonly DiscordClient _client;
+		private readonly SlashCommandConfiguration _configuration;
 		private readonly List<BaseSlashCommand> _baseSlashCommands;
+		private readonly ServiceProvider _serviceProvider;
+		private readonly SlashCommandExceptionMiddleware _exceptionMiddleware;
 
 		public SlashCommandService(
-			DiscordClient client)
+			DiscordClient client, 
+			SlashCommandConfiguration configuration)
 		{
 			_client = client;
+			_configuration = configuration;
 			_baseSlashCommands = BuildBaseSlashCommands();
+			_serviceProvider = _configuration.Services.BuildServiceProvider();
+			_exceptionMiddleware = new SlashCommandExceptionMiddleware(_configuration.OnExceptionHandlers);
+
 		}
 
 		private List<BaseSlashCommand> BuildBaseSlashCommands()
@@ -48,17 +57,27 @@ namespace PizzaBotGG.App.DiscordSlashCommandModule
 			_client.InteractionCreated += OnInteractionCreated;
 		}
 
-		private Task OnInteractionCreated(DiscordClient sender, DSharpPlus.EventArgs.InteractionCreateEventArgs e)
+		private async Task OnInteractionCreated(DiscordClient sender, DSharpPlus.EventArgs.InteractionCreateEventArgs e)
 		{
+			using (var scope = _serviceProvider.CreateScope())
+			{
+				var scopedProvider = scope.ServiceProvider;
+				var slashContext = new SlashContext(
+					e.Interaction, 
+					_baseSlashCommands,
+					scopedProvider);
 
-			var interaction = e.Interaction;
-			var data = interaction.Data;
 
-			
+				var middlewareInstances = new List<ISlashCommandMiddleware>();
+				middlewareInstances.Add(_exceptionMiddleware);
 
+				var customMiddleware = scopedProvider.GetServices<ISlashCommandMiddleware>();
+				middlewareInstances.AddRange(customMiddleware);
 
-
-			throw new System.NotImplementedException();
+				var moduleRunner = new SlashModuleRunner();
+				var middleWareRunner = new SlashCommandMiddlewareRunner(middlewareInstances, moduleRunner.RunModule);
+				await middleWareRunner.Run(slashContext);
+			}
 		}
 	}
 }

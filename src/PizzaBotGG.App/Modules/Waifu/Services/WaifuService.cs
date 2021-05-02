@@ -47,7 +47,7 @@ namespace PizzaBotGG.App.Modules.Waifu.Services
 			{
 				if (apiException.StatusCode == System.Net.HttpStatusCode.NotFound)
 				{
-					throw new CommandException("Waifu category not found");
+					throw new SlashCommandException("Waifu category not found");
 				}
 
 				throw;

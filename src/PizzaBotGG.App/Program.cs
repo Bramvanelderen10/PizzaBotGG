@@ -41,7 +41,13 @@ namespace PizzaBotGG.App
             };
 
 			var discordClient = new DiscordClient(discordConfiguration);
-            var slashCommandService = await discordClient.AddSlashCommands();
+            var slashCommandService = await discordClient.AddSlashCommands(options => {
+                options.Services
+                    .AddWaifuModule()
+                    .AddCatModule()
+                    .AddMusicModule()
+                    .AddSingleton<IRandomService, RandomService>();
+            });
 
             var endpoint = new ConnectionEndpoint
             {
@@ -60,6 +66,11 @@ namespace PizzaBotGG.App
             await discordClient.ConnectAsync();
             await lavalink.ConnectAsync(lavalinkConfig);
             await Task.Delay(-1);
+		}
+
+		private static async Task Options_OnCommandError(object sender, CommandContext e)
+		{
+			throw new NotImplementedException();
 		}
 
 		static ServiceProvider GetServiceProvider()

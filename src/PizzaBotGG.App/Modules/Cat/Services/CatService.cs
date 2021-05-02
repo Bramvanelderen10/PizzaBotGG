@@ -26,7 +26,7 @@ namespace PizzaBotGG.App.Modules.Cat.Services
 			var breedId = await GetBreedId(breed);
 			var catResponses = await _catApi.SearchCats(breedId: breedId, mimeTypes: mimeTypes);
 
-			if (!catResponses.Any()) throw new CommandException("No cats found :(");
+			if (!catResponses.Any()) throw new SlashCommandException("No cats found :(");
 
 			var catResponse = catResponses.First();
 			var catBreed = catResponse.Breeds.FirstOrDefault();
@@ -54,7 +54,7 @@ namespace PizzaBotGG.App.Modules.Cat.Services
 			var breeds = await _catApi.SearchBreeds(breedName);
 			var breed = breeds.FirstOrDefault();
 
-			if (breed == null) throw new CommandException("Breed not found");
+			if (breed == null) throw new SlashCommandException("Breed not found");
 
 			return breed?.Id;
 		}

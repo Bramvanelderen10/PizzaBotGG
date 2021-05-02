@@ -20,7 +20,7 @@ namespace PizzaBotGG.App.DiscordSlashCommandModule.Utilities
 			if (groupAttribute == null) return slashCommands.OfType<BaseSlashCommand>().ToList();
 
 			//If group process group attribute then put slash commands as children
-			var slashCommandGroup = new SlashCommandGroup(groupAttribute.Name, groupAttribute.Description, slashCommands);
+			var slashCommandGroup = new SlashCommandGroup(groupAttribute.Name, groupAttribute.Description, moduleType, slashCommands);
 
 			return new List<BaseSlashCommand> { slashCommandGroup };
 		}
@@ -39,7 +39,7 @@ namespace PizzaBotGG.App.DiscordSlashCommandModule.Utilities
 						.Select(parameter => new SlashCommandParameter(parameter.Name, parameter.ParameterType, parameter.IsOptional))
 						.ToArray();
 
-					return new SlashCommand(commandAttribute.Name, commandAttribute.Description, slashCommandParameters);
+					return new SlashCommand(commandAttribute.Name, commandAttribute.Description, commandType, methodInfo, slashCommandParameters);
 				})
 				.Where(slashCommand => slashCommand != null)
 				.ToList();

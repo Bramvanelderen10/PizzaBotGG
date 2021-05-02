@@ -17,8 +17,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DSharpPlus.Rest", "..\..\DS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DSharpPlus.SlashCommands", "..\..\DSharpPlus.SlashCommands\DSharpPlus.SlashCommands.csproj", "{852F7AE0-AEF1-4FC8-8DA9-401CE1700270}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DSharpPlus.Interactivity", "..\..\DSharpPlus\DSharpPlus.Interactivity\DSharpPlus.Interactivity.csproj", "{042FC499-0039-424F-A914-D2F5262549AA}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,10 +47,6 @@ Global
 		{852F7AE0-AEF1-4FC8-8DA9-401CE1700270}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{852F7AE0-AEF1-4FC8-8DA9-401CE1700270}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{852F7AE0-AEF1-4FC8-8DA9-401CE1700270}.Release|Any CPU.Build.0 = Release|Any CPU
-		{042FC499-0039-424F-A914-D2F5262549AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{042FC499-0039-424F-A914-D2F5262549AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{042FC499-0039-424F-A914-D2F5262549AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{042FC499-0039-424F-A914-D2F5262549AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
