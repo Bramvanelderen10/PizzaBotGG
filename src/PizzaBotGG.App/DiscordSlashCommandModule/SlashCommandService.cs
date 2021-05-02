@@ -1,6 +1,4 @@
 ﻿using DSharpPlus;
-using DSharpPlus.CommandsNext;
-using DSharpPlus.CommandsNext.Attributes;
 using Microsoft.Extensions.DependencyInjection;
 using PizzaBotGG.App.DiscordSlashCommandModule.Interfaces;
 using PizzaBotGG.App.DiscordSlashCommandModule.Models;
@@ -8,7 +6,6 @@ using PizzaBotGG.App.DiscordSlashCommandModule.Utilities;
 using PizzaBotGG.App.ExceptionHandling;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 
 namespace PizzaBotGG.App.DiscordSlashCommandModule
@@ -30,7 +27,6 @@ namespace PizzaBotGG.App.DiscordSlashCommandModule
 			_baseSlashCommands = BuildBaseSlashCommands();
 			_serviceProvider = _configuration.Services.BuildServiceProvider();
 			_exceptionMiddleware = new SlashCommandExceptionMiddleware(_configuration.OnExceptionHandlers);
-
 		}
 
 		private List<BaseSlashCommand> BuildBaseSlashCommands()
@@ -50,10 +46,6 @@ namespace PizzaBotGG.App.DiscordSlashCommandModule
 			var applicationCommands = ApplicationCommandLoader.GetApplicationCommands(_baseSlashCommands);
 
 			await _client.BulkOverwriteGuildApplicationCommandsAsync(772864356504698912, applicationCommands);
-		}		
-
-		public void HandleSlashCommands()
-		{
 			_client.InteractionCreated += OnInteractionCreated;
 		}
 

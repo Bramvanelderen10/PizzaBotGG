@@ -1,10 +1,5 @@
 ﻿using DSharpPlus;
-using DSharpPlus.CommandsNext;
-using DSharpPlus.Entities;
 using System;
-using System.Linq;
-using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace PizzaBotGG.App.DiscordSlashCommandModule
@@ -17,9 +12,7 @@ namespace PizzaBotGG.App.DiscordSlashCommandModule
 			if (configureOptions != null) configureOptions(configuration);
 			
 			var slashCommandService = new SlashCommandService(client, configuration);
-
 			await slashCommandService.RegisterSlashCommands();
-			slashCommandService.HandleSlashCommands();
 
 			return slashCommandService;
 		}

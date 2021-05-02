@@ -68,23 +68,6 @@ namespace PizzaBotGG.App
             await Task.Delay(-1);
 		}
 
-		private static async Task Options_OnCommandError(object sender, CommandContext e)
-		{
-			throw new NotImplementedException();
-		}
-
-		static ServiceProvider GetServiceProvider()
-		{
-            var services = new ServiceCollection();
-            services.AddWaifuModule();
-            services.AddCatModule();
-            services.AddMusicModule();
-            services.AddSingleton<IRandomService, RandomService>();
-
-            var serviceProvider = services.BuildServiceProvider();
-            return serviceProvider;
-        }
-
 		static IConfiguration GetConfiguration()
 		{
             var configurationBuilder = new ConfigurationBuilder();
@@ -98,6 +81,5 @@ namespace PizzaBotGG.App
 
             return configurationBuilder.Build();
         }
-
 	}
 }
