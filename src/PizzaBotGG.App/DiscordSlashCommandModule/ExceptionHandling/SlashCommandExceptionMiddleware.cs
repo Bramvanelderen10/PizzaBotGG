@@ -19,17 +19,8 @@ namespace PizzaBotGG.App.ExceptionHandling
 			_onExceptionHandlers = onExceptionHandlers ?? new List<Action<SlashCommandErrorContext>>();
 		}
 
-		public async Task HandleCommandException(CommandsNextExtension sender, CommandErrorEventArgs eventArguments)
-		{
-			var exception = eventArguments.Exception;
-			if (!(exception is SlashCommandException commandException)) return;
-
-			await eventArguments.Context.RespondAsync(commandException.Message);
-		}
-
 		public async Task InvokeAsync(SlashContext context, System.Func<SlashContext, Task> next)
 		{
-
 			try
 			{
 				await next(context);
