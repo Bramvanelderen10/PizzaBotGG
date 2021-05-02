@@ -1,11 +1,7 @@
-﻿using DSharpPlus.CommandsNext;
-using DSharpPlus.Entities;
-using PizzaBotGG.App.DiscordSlashCommandModule;
+﻿using PizzaBotGG.App.DiscordSlashCommandModule;
 using PizzaBotGG.App.DiscordSlashCommandModule.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace PizzaBotGG.App.ExceptionHandling

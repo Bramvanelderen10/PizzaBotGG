@@ -1,12 +1,8 @@
 using DSharpPlus;
-using DSharpPlus.CommandsNext;
-using DSharpPlus.CommandsNext.Converters;
-using DSharpPlus.Entities;
 using DSharpPlus.Lavalink;
 using DSharpPlus.Net;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using PizzaBotGG.App.ExceptionHandling;
 using PizzaBotGG.App.Modules.Cat.Extensions;
 using PizzaBotGG.App.Modules.Music.Extensions;
 using PizzaBotGG.App.Modules.Waifu.Extensions;
@@ -14,7 +10,6 @@ using PizzaBotGG.App.Services;
 using PizzaBotGG.App.Settings;
 using System;
 using System.IO;
-using System.Reflection;
 using System.Threading.Tasks;
 using PizzaBotGG.App.DiscordSlashCommandModule;
 

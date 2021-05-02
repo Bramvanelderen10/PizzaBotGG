@@ -1,6 +1,4 @@
-﻿using DSharpPlus.CommandsNext;
-using Microsoft.Extensions.DependencyInjection;
-using PizzaBotGG.App.Converters;
+﻿using Microsoft.Extensions.DependencyInjection;
 using PizzaBotGG.App.Modules.Waifu.Apis;
 using PizzaBotGG.App.Modules.Waifu.Enums;
 using PizzaBotGG.App.Modules.Waifu.Services;
@@ -20,14 +18,6 @@ namespace PizzaBotGG.App.Modules.Waifu.Extensions
 			services.AddTransient<IWaifuService, WaifuService>();
 
 			return services;
-		}
-
-		public static CommandsNextExtension RegisterWaifuConverters(this CommandsNextExtension commandsNext)
-		{
-			commandsNext.RegisterConverter(new NullableEnumConverter<WaifuSFWCategory>());
-			commandsNext.RegisterConverter(new NullableEnumConverter<WaifuNSFWCategory>());
-
-			return commandsNext;
 		}
 	}
 }

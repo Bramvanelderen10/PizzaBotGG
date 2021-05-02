@@ -1,11 +1,8 @@
-﻿using DSharpPlus.CommandsNext;
-using DSharpPlus.Entities;
+﻿using DSharpPlus.Entities;
 using PizzaBotGG.App.ExceptionHandling;
 using PizzaBotGG.App.Modules.Cat.Api;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace PizzaBotGG.App.Modules.Cat.Services

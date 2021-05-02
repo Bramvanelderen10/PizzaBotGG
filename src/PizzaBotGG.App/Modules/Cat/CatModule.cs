@@ -1,12 +1,8 @@
-﻿using DSharpPlus.CommandsNext;
-using DSharpPlus.CommandsNext.Attributes;
-using DSharpPlus.Entities;
+﻿using DSharpPlus.Entities;
 using MimeTypes;
 using PizzaBotGG.App.DiscordSlashCommandModule;
 using PizzaBotGG.App.DiscordSlashCommandModule.Attributes;
 using PizzaBotGG.App.Modules.Cat.Services;
-using System;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace PizzaBotGG.App.Modules.Image

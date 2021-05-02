@@ -1,6 +1,4 @@
-﻿using DSharpPlus.CommandsNext;
-using DSharpPlus.CommandsNext.Attributes;
-using DSharpPlus.Entities;
+﻿using DSharpPlus.Entities;
 using PizzaBotGG.App.DiscordSlashCommandModule;
 using PizzaBotGG.App.DiscordSlashCommandModule.Attributes;
 using PizzaBotGG.App.Modules.Waifu.Enums;

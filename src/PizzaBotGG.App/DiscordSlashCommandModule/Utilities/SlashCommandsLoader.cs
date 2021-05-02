@@ -1,5 +1,4 @@
-﻿using DSharpPlus.CommandsNext.Attributes;
-using PizzaBotGG.App.DiscordSlashCommandModule.Attributes;
+﻿using PizzaBotGG.App.DiscordSlashCommandModule.Attributes;
 using PizzaBotGG.App.DiscordSlashCommandModule.Models;
 using System;
 using System.Collections.Generic;

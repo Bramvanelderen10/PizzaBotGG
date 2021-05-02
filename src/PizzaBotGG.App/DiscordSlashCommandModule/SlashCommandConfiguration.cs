@@ -1,7 +1,5 @@
-﻿using DSharpPlus.CommandsNext;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using PizzaBotGG.App.DiscordSlashCommandModule.Attributes;
-using PizzaBotGG.App.DiscordSlashCommandModule.Interfaces;
 using PizzaBotGG.App.ExceptionHandling;
 using System;
 using System.Collections.Generic;

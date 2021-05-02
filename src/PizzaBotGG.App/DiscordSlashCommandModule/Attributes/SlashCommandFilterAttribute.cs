@@ -1,11 +1,10 @@
-﻿using DSharpPlus.CommandsNext;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace PizzaBotGG.App.DiscordSlashCommandModule.Attributes
 {
 	public abstract class SlashCommandFilterAttribute
 	{
-		public abstract Task OnExecuting(CommandContext commandContext);
-		public abstract Task OnExecuted(CommandContext commandContext);
+		public abstract Task OnExecuting(SlashContext slashContext);
+		public abstract Task OnExecuted(SlashContext slashContext);
 	}
 }
