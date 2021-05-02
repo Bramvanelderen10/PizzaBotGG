@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PizzaBotGG.App.ExceptionHandling;
 using PizzaBotGG.App.Modules.Cat.Extensions;
+using PizzaBotGG.App.Modules.Music.Extensions;
 using PizzaBotGG.App.Modules.Waifu.Enums;
 using PizzaBotGG.App.Modules.Waifu.Extensions;
 using PizzaBotGG.App.Services;
@@ -82,6 +83,7 @@ namespace PizzaBotGG.App
             var services = new ServiceCollection();
             services.AddWaifuModule();
             services.AddCatModule();
+            services.AddMusicModule();
             services.AddSingleton<IRandomService, RandomService>();
 
             var serviceProvider = services.BuildServiceProvider();
