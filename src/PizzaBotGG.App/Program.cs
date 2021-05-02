@@ -18,6 +18,9 @@ using System;
 using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
+using System.Linq;
+using PizzaBotGG.App.Discord;
+using System.Collections.Generic;
 
 namespace PizzaBotGG.App
 {
@@ -41,7 +44,7 @@ namespace PizzaBotGG.App
                 Intents = DiscordIntents.AllUnprivileged
             };
 
-            var discordClient = new DiscordClient(discordConfiguration);
+			var discordClient = new DiscordClient(discordConfiguration);
 
             var commandConfiguration = new CommandsNextConfiguration
             {
@@ -57,7 +60,8 @@ namespace PizzaBotGG.App
 
             commandsNext.RegisterWaifuConverters();
             commandsNext.RegisterCommands(Assembly.GetEntryAssembly());
-			commandsNext.CommandErrored += commandExceptionHandler.HandleCommandException;
+            //await commandsNext.RegisterSlashCommands();
+            commandsNext.CommandErrored += commandExceptionHandler.HandleCommandException;
 
             var endpoint = new ConnectionEndpoint
             {
@@ -103,5 +107,6 @@ namespace PizzaBotGG.App
 
             return configurationBuilder.Build();
         }
+
 	}
 }
