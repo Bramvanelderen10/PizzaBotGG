@@ -40,7 +40,8 @@ namespace PizzaBotGG.App.DiscordSlashCommandModule
 
 			if (taskResult is string stringResult)
 			{
-				await context.Respond(stringResult);
+				var actualResult = string.IsNullOrEmpty(stringResult) ? "No result" : stringResult;
+				await context.Respond(actualResult);
 				return;
 			}
 
@@ -76,20 +77,23 @@ namespace PizzaBotGG.App.DiscordSlashCommandModule
 		{
 			var parameterValues = command.Parameters.Select(parameter =>
 			{
-				var parameterOption = options.FirstOrDefault(x => x.Name.Equals(parameter.Name));
+				var parameterOption = options.FirstOrDefault(x => x.Name.Equals(parameter.Name, StringComparison.OrdinalIgnoreCase));
 				if (parameterOption == null && !parameter.IsOptional) throw new SlashCommandException($"Command requires parameter {parameter.Name}");
 
 				if (parameterOption == null) return null;
 
-				if (parameter.ParameterType.IsEnum)
+				var isNullableEnum = "Nullable`1" == parameter.ParameterType.Name && parameter.ParameterType.GenericTypeArguments.Single().IsEnum;
+				if (parameter.ParameterType.IsEnum || isNullableEnum)
 				{
+					var enumType = isNullableEnum ? parameter.ParameterType.GenericTypeArguments.Single() : parameter.ParameterType;
+
 					var stringValue = parameterOption.Value as string;
 
 					//If parameter option from discord did have a value but the parsed to string variant did not it means it was not a valid type
 					if (parameterOption.Value != null && stringValue == null) throw new SlashCommandException($"Expected parameter of type string");
 
 					//If not a valid enum throw exception
-					if (!Enum.TryParse(parameter.ParameterType, stringValue, true, out object result)) throw new SlashCommandException($"Given parameter was not one of the given options");
+					if (!Enum.TryParse(enumType, stringValue, true, out object result)) throw new SlashCommandException($"Given parameter was not one of the given options");
 
 					return result;
 				}

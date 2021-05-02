@@ -20,7 +20,12 @@ namespace PizzaBotGG.App.DiscordSlashCommandModule
 
 		public async Task Run(SlashContext context)
 		{
-			if (_middlewareInstances.Count <= _currentMiddlewareIndex) await _finalFunction(context);
+			if (_middlewareInstances.Count <= _currentMiddlewareIndex)
+			{
+				await _finalFunction(context);
+				return;
+			}
+
 			var currentMiddleware = _middlewareInstances[_currentMiddlewareIndex];
 			_currentMiddlewareIndex++;
 			await currentMiddleware.InvokeAsync(context, Run);

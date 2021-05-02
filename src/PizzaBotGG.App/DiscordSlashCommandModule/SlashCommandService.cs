@@ -1,4 +1,5 @@
 ﻿using DSharpPlus;
+using DSharpPlus.Entities;
 using Microsoft.Extensions.DependencyInjection;
 using PizzaBotGG.App.DiscordSlashCommandModule.Interfaces;
 using PizzaBotGG.App.DiscordSlashCommandModule.Models;
@@ -51,6 +52,9 @@ namespace PizzaBotGG.App.DiscordSlashCommandModule
 
 		private async Task OnInteractionCreated(DiscordClient sender, DSharpPlus.EventArgs.InteractionCreateEventArgs e)
 		{
+			var builder = new DiscordInteractionResponseBuilder();
+			builder.WithContent("Porcessing command");
+			await e.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, builder);
 			using (var scope = _serviceProvider.CreateScope())
 			{
 				var scopedProvider = scope.ServiceProvider;
