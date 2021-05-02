@@ -9,18 +9,14 @@ using Microsoft.Extensions.DependencyInjection;
 using PizzaBotGG.App.ExceptionHandling;
 using PizzaBotGG.App.Modules.Cat.Extensions;
 using PizzaBotGG.App.Modules.Music.Extensions;
-using PizzaBotGG.App.Modules.Waifu.Enums;
 using PizzaBotGG.App.Modules.Waifu.Extensions;
 using PizzaBotGG.App.Services;
 using PizzaBotGG.App.Settings;
-using RestEase;
 using System;
 using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
-using System.Linq;
-using PizzaBotGG.App.Discord;
-using System.Collections.Generic;
+using PizzaBotGG.App.DiscordSlashCommandModule;
 
 namespace PizzaBotGG.App
 {
@@ -45,23 +41,7 @@ namespace PizzaBotGG.App
             };
 
 			var discordClient = new DiscordClient(discordConfiguration);
-
-            var commandConfiguration = new CommandsNextConfiguration
-            {
-                StringPrefixes = new[] { "/", "$" },
-                Services = GetServiceProvider(),
-
-                // enable responding in direct messages
-                EnableDms = true,
-            };
-
-            var commandExceptionHandler = new CommandExceptionHandler();
-            var commandsNext = discordClient.UseCommandsNext(commandConfiguration);
-
-            commandsNext.RegisterWaifuConverters();
-            commandsNext.RegisterCommands(Assembly.GetEntryAssembly());
-            //await commandsNext.RegisterSlashCommands();
-            commandsNext.CommandErrored += commandExceptionHandler.HandleCommandException;
+            var slashCommandService = await discordClient.AddSlashCommands();
 
             var endpoint = new ConnectionEndpoint
             {

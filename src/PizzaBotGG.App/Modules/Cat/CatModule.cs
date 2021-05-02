@@ -1,6 +1,9 @@
 ﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
+using DSharpPlus.Entities;
 using MimeTypes;
+using PizzaBotGG.App.DiscordSlashCommandModule;
+using PizzaBotGG.App.DiscordSlashCommandModule.Attributes;
 using PizzaBotGG.App.Modules.Cat.Services;
 using System;
 using System.Linq;
@@ -8,9 +11,8 @@ using System.Threading.Tasks;
 
 namespace PizzaBotGG.App.Modules.Image
 {
-	[Group("cat")]
-	[Aliases("c")]
-	public class CatModule : BaseCommandModule
+	[SlashCommandGroup("cat", "cat module")]
+	public class CatModule : SlashModule
 	{
 		private readonly ICatService _catService;
 
@@ -19,8 +21,8 @@ namespace PizzaBotGG.App.Modules.Image
 			_catService = catService;
 		}
 
-		[GroupCommand]
-		public async Task CatImageCommand(CommandContext context, string breedName = null)
+		[SlashCommand("random", "gets a random cat image")]
+		public async Task<DiscordEmbed> CatImageCommand(string breedName = null)
 		{
 			var mimeTypes = new[]
 			{
@@ -29,18 +31,18 @@ namespace PizzaBotGG.App.Modules.Image
 			};
 
 			var catEmbed = await _catService.GetCatEmbed(mimeTypes, breedName);
-			await context.RespondAsync(catEmbed);
+			return catEmbed;
 		}
 
-		[Command("breeds")]
-		public async Task BreedsCommand(CommandContext context, string breedName = null)
+		[SlashCommand("breeds", "gets all breeds")]
+		public async Task<string> BreedsCommand(string breedName = null)
 		{
 			var breedsResponse = await _catService.GetBreedsResponse(breedName);
-			await context.RespondAsync(breedsResponse);
+			return breedsResponse;
 		}
 
-		[Command("gif")]
-		public async Task CatGifCommand(CommandContext context, string breedName = null)
+		[SlashCommand("gif", "gets random cat gif")]
+		public async Task<DiscordEmbed> CatGifCommand(string breedName = null)
 		{
 			var mimeTypes = new[]
 			{
@@ -48,7 +50,7 @@ namespace PizzaBotGG.App.Modules.Image
 			};
 
 			var catEmbed = await _catService.GetCatEmbed(mimeTypes, breedName);
-			await context.RespondAsync(catEmbed);
+			return catEmbed;
 		}
 
 		
