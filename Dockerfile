@@ -1,13 +1,9 @@
 FROM mcr.microsoft.com/dotnet/sdk:5.0-focal AS build
 
-
-
 WORKDIR /source
 
 COPY src/*.sln .
 COPY src/PizzaBotGG.App/*.csproj ./PizzaBotGG.App/
-
-RUN dotnet restore -r linux-x64
 
 COPY src/PizzaBotGG.App/. ./PizzaBotGG.App/
 WORKDIR /source/PizzaBotGG.App
@@ -24,7 +20,6 @@ COPY start-bot.sh ./start-bot.sh
 
 COPY tools/Lavalink/Lavalink.jar Lavalink.jar
 COPY tools/Lavalink/application.yml application.yml
-EXPOSE 2333
 
 RUN apt-get update \
     && apt-get install -y default-jre
