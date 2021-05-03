@@ -1,6 +1,7 @@
 ﻿using DSharpPlus;
 using DSharpPlus.Entities;
 using Microsoft.Extensions.DependencyInjection;
+using PizzaBotGG.App.DiscordSlashCommandModule.Attributes;
 using PizzaBotGG.App.DiscordSlashCommandModule.Models;
 using PizzaBotGG.App.ExceptionHandling;
 using System;
@@ -29,10 +30,39 @@ namespace PizzaBotGG.App.DiscordSlashCommandModule
 			module.SlashContext = context;
 
 
-			//Run command
+			//Run filters
 			var slashCommandContext = GetSlashCommandContext(baseCommand, data);
 			var method = slashCommandContext.CommandMethod;
 
+			var moduleFilters = moduleType.GetCustomAttributes(false)
+				.Select(attribute => attribute as SlashFilterAttribute)
+				.Where(filterAttribute => filterAttribute != null).ToList();
+
+			var commandFilters = method.GetCustomAttributes(false)
+				.Select(attribute => attribute as SlashFilterAttribute)
+				.Where(filterAttribute => filterAttribute != null).ToList();
+
+			var filters = new List<SlashFilterAttribute>();
+			filters.AddRange(moduleFilters);
+			filters.AddRange(commandFilters);
+
+			foreach (var filter in filters)
+			{
+				await filter.OnExecuting(context);
+			}
+
+			//Run method
+			await RunMethod(context, module, slashCommandContext, method);
+
+			filters.Reverse();
+			foreach (var filter in filters)
+			{
+				await filter.OnExecuted(context);
+			}
+		}
+
+		private async Task RunMethod(SlashContext context, SlashModule module, SlashCommandContext slashCommandContext, System.Reflection.MethodInfo method)
+		{
 			var invokeTask = (Task)method.Invoke(module, slashCommandContext.Parameters);
 			await invokeTask.ConfigureAwait(false);
 			var prop = invokeTask.GetType().GetProperty("Result");

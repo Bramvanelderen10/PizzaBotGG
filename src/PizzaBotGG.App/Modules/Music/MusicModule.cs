@@ -1,11 +1,14 @@
-﻿using DSharpPlus.CommandsNext;
-using DSharpPlus.CommandsNext.Attributes;
+﻿using PizzaBotGG.App.DiscordSlashCommandModule;
+using PizzaBotGG.App.DiscordSlashCommandModule.Attributes;
+using PizzaBotGG.App.Modules.Music.Attributes;
 using PizzaBotGG.App.Modules.Music.Services;
 using System.Threading.Tasks;
 
 namespace PizzaBotGG.App.Modules.Music
 {
-	public class MusicModule : BaseCommandModule
+	[SlashCommandGroup("music", "The music module")]
+	[MusicFilter]
+	public class MusicModule : SlashModule
 	{
 		private readonly IMusicService _musicService;
 
@@ -14,52 +17,52 @@ namespace PizzaBotGG.App.Modules.Music
 			_musicService = musicService;
 		}
 
-		public override async Task BeforeExecutionAsync(CommandContext context)
+		[SlashCommand("play", "Plays music using either a song name or link")]
+		public async Task Play(string search)
 		{
-			await _musicService.Connect(context);
-			await base.BeforeExecutionAsync(context);
+			await _musicService.Play(SlashContext, search);
 		}
 
-		[Command]
-		public async Task Play(CommandContext context, [RemainingText] string search)
+		[SlashCommand("skip", "Skips a song")]
+		public async Task<string> Skip()
 		{
-			await _musicService.Play(context, search);
+			await _musicService.Skip(SlashContext);
+			return "Success";
 		}
 
-		[Command]
-		public async Task Skip(CommandContext context)
+		[SlashCommand("pause", "Pause a song")]
+		public async Task<string> Pause()
 		{
-			await _musicService.Skip(context);
+			await _musicService.Pause(SlashContext);
+			return "Success";
 		}
 
-		[Command]
-		public async Task Pause(CommandContext context)
+		[SlashCommand("unpause", "Unpause a song")]
+		public async Task<string> Unpause()
 		{
-			await _musicService.Pause(context);
+			await _musicService.Unpause(SlashContext);
+			return "Success";
 		}
 
-		[Command]
-		public async Task Unpause(CommandContext context)
+		[SlashCommand("queue", "Queue a song")]
+		public async Task<string> Queue()
 		{
-			await _musicService.Unpause(context);
+			await _musicService.Queue(SlashContext);
+			return "Success";
 		}
 
-		[Command]
-		public async Task Queue(CommandContext context)
+		[SlashCommand("clear", "Clear the queue")]
+		public async Task<string> Clear()
 		{
-			await _musicService.Queue(context);
+			await _musicService.Clear(SlashContext);
+			return "Success";
 		}
 
-		[Command]
-		public async Task Clear(CommandContext context)
+		[SlashCommand("stats", "Displays Lavalink statistics.")]
+		public async Task<string> Stats()
 		{
-			await _musicService.Clear(context);
-		}
-
-		[Command, Description("Displays Lavalink statistics.")]
-		public async Task Stats(CommandContext context)
-		{
-			await _musicService.Stats(context);
+			await _musicService.Stats(SlashContext);
+			return "Success";
 		}
 
 	}

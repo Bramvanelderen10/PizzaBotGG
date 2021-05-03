@@ -10,12 +10,9 @@ namespace PizzaBotGG.App.DiscordSlashCommandModule
 	{
 		public SlashCommandConfiguration()
 		{
-			GlobalCommandFilters = new List<SlashCommandFilterAttribute>();
 			Services = new ServiceCollection();
 			OnExceptionHandlers = new List<Action<SlashCommandErrorContext>>();
 		}
-
-		public List<SlashCommandFilterAttribute> GlobalCommandFilters { get; }
 		public List<Action<SlashCommandErrorContext>> OnExceptionHandlers { get; }
 		public IServiceCollection Services { get; }
 	}

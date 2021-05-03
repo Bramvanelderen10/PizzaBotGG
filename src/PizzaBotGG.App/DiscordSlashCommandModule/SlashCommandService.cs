@@ -61,7 +61,8 @@ namespace PizzaBotGG.App.DiscordSlashCommandModule
 				var slashContext = new SlashContext(
 					e.Interaction, 
 					_baseSlashCommands,
-					scopedProvider);
+					scopedProvider,
+					sender);
 
 
 				var middlewareInstances = new List<ISlashCommandMiddleware>();

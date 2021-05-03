@@ -7,7 +7,7 @@ namespace PizzaBotGG.App.Modules.Music.Extensions
 	{
 		public static IServiceCollection AddMusicModule(this IServiceCollection services)
 		{
-			services.AddTransient<IMusicService, MusicService>();
+			services.AddSingleton<IMusicService, MusicService>();
 			return services;
 		}
 	}
