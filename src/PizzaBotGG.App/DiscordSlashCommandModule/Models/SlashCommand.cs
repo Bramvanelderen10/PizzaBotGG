@@ -18,7 +18,7 @@ namespace PizzaBotGG.App.DiscordSlashCommandModule.Models
 			MethodInfo = methodInfo;
 		}
 
-		public List<SlashCommandParameter> Parameters { get; set; }
+		public List<SlashCommandParameter> Parameters { get; }
 		public MethodInfo MethodInfo { get; }
 	}
 }

@@ -9,7 +9,7 @@ namespace PizzaBotGG.App.DiscordSlashCommandModule
 	{
 		private readonly Func<SlashContext, Task> _finalFunction;
 		private int _currentMiddlewareIndex = 0;
-		private List<ISlashCommandMiddleware> _middlewareInstances;
+		private readonly List<ISlashCommandMiddleware> _middlewareInstances;
 		public SlashCommandMiddlewareRunner(
 			List<ISlashCommandMiddleware> middlewareInstances, 
 			Func<SlashContext, Task> finalFunction)

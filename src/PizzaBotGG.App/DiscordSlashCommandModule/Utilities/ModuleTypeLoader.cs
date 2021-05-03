@@ -23,7 +23,6 @@ namespace PizzaBotGG.App.DiscordSlashCommandModule.Utilities
 
         private static bool IsModuleCandidateType(TypeInfo typeInfo)
         {
-            // check if compiler-generated
             if (typeInfo.GetCustomAttribute<CompilerGeneratedAttribute>(false) != null)
                 return false;
 
@@ -37,11 +36,9 @@ namespace PizzaBotGG.App.DiscordSlashCommandModule.Utilities
             if (typeInfo.IsGenericType && typeInfo.Name.Contains("AnonymousType") && (typeInfo.Name.StartsWith("<>") || typeInfo.Name.StartsWith("VB$")) && (typeInfo.Attributes & TypeAttributes.NotPublic) == TypeAttributes.NotPublic)
                 return false;
 
-            // check if abstract, static, or not a class
             if (!typeInfo.IsClass || typeInfo.IsAbstract)
                 return false;
 
-            // check if delegate type
             var typeInfoDelegate = typeof(Delegate).GetTypeInfo();
             if (typeInfoDelegate.IsAssignableFrom(typeInfo))
                 return false;
@@ -52,15 +49,12 @@ namespace PizzaBotGG.App.DiscordSlashCommandModule.Utilities
 
         private static bool IsCommandCandidate(this MethodInfo method)
         {
-            // check if exists
             if (method == null)
                 return false;
 
-            // check if static, non-public, abstract, a constructor, or a special name
             if (method.IsStatic || method.IsAbstract || method.IsConstructor || method.IsSpecialName)
                 return false;
 
-            // qualifies
             return true;
         }
     }
