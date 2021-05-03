@@ -22,14 +22,14 @@ namespace PizzaBotGG.App.Modules.Music.Services
 
 			if (!guild.VoiceStates.ContainsKey(userId))
 			{
-				await context.Respond("You are not in a voice channel");
+				await context.RespondAsync("You are not in a voice channel");
 				return;
 			}
 
 			var voiceState = guild.VoiceStates[userId];
 			if (voiceState.Channel == null)
 			{
-				await context.Respond("You are not in a voice channel");
+				await context.RespondAsync("You are not in a voice channel");
 				return;
 			}
 
@@ -40,7 +40,7 @@ namespace PizzaBotGG.App.Modules.Music.Services
 				var lava = context.Client.GetLavalink();
 				if (!lava.ConnectedNodes.Any())
 				{
-					await context.Respond("The Lavalink connection is not established");
+					await context.RespondAsync("The Lavalink connection is not established");
 					return;
 				}
 				LavalinkNodeConnection = lava.ConnectedNodes.Values.First();
@@ -51,18 +51,18 @@ namespace PizzaBotGG.App.Modules.Music.Services
 
 					if (!lava.ConnectedNodes.Any())
 					{
-						await context.Respond("The Lavalink connection is not established");
+						await context.RespondAsync("The Lavalink connection is not established");
 						return;
 					}
 
 					if (channel.Type != ChannelType.Voice)
 					{
-						await context.Respond("Not a valid voice channel.");
+						await context.RespondAsync("Not a valid voice channel.");
 						return;
 					}
 
 					await LavalinkNodeConnection.ConnectAsync(channel);
-					await context.Respond($"Joined {channel.Name}!");
+					await context.RespondAsync($"Joined {channel.Name}!");
 				}
 			}
 
@@ -71,7 +71,7 @@ namespace PizzaBotGG.App.Modules.Music.Services
 				LavalinkGuildConnection = LavalinkNodeConnection.GetGuildConnection(voiceState.Guild);
 				if (LavalinkGuildConnection == null)
 				{
-					await context.Respond("Lavalink is not connected.");
+					await context.RespondAsync("Lavalink is not connected.");
 					return;
 				}
 			}
@@ -81,7 +81,7 @@ namespace PizzaBotGG.App.Modules.Music.Services
 		{
 			if (string.IsNullOrWhiteSpace(search))
 			{
-				await context.Respond("```search something noob```");
+				await context.RespondAsync("```search something noob```");
 				return;
 			}
 
@@ -90,7 +90,7 @@ namespace PizzaBotGG.App.Modules.Music.Services
 			if (loadResult.LoadResultType == LavalinkLoadResultType.LoadFailed
 				|| loadResult.LoadResultType == LavalinkLoadResultType.NoMatches)
 			{
-				await context.Respond($"Track search failed for {search}.");
+				await context.RespondAsync($"Track search failed for {search}.");
 				return;
 			}
 			var track = loadResult.Tracks.First();
@@ -99,13 +99,13 @@ namespace PizzaBotGG.App.Modules.Music.Services
 			{
 				await LavalinkGuildConnection.PlayAsync(track);
 
-				await context.Respond($"```Now playing {track.Uri}!```");
+				await context.RespondAsync($"```Now playing {track.Uri}!```");
 			}
 			else
 			{
 				CurrentQueue.Add(track);
 				LavalinkGuildConnection.PlaybackFinished += LavalinkGuildConnection_PlaybackFinished;
-				await context.Respond($"```Queued {track.Title}!```");
+				await context.RespondAsync($"```Queued {track.Title}!```");
 			}
 		}
 
@@ -123,7 +123,7 @@ namespace PizzaBotGG.App.Modules.Music.Services
 		{
 			if (LavalinkGuildConnection.CurrentState.CurrentTrack == null)
 			{
-				await context.Respond("There are no tracks loaded.");
+				await context.RespondAsync("There are no tracks loaded.");
 				return;
 			}
 
@@ -134,7 +134,7 @@ namespace PizzaBotGG.App.Modules.Music.Services
 		{
 			if (LavalinkGuildConnection.CurrentState.CurrentTrack == null)
 			{
-				await context.Respond("There are no tracks loaded.");
+				await context.RespondAsync("There are no tracks loaded.");
 				return;
 			}
 
@@ -145,7 +145,7 @@ namespace PizzaBotGG.App.Modules.Music.Services
 		{
 			if (LavalinkGuildConnection.CurrentState.CurrentTrack == null)
 			{
-				await context.Respond("There are no tracks loaded.");
+				await context.RespondAsync("There are no tracks loaded.");
 				return;
 			}
 
@@ -155,7 +155,7 @@ namespace PizzaBotGG.App.Modules.Music.Services
 				await LavalinkGuildConnection.PlayAsync(nextTrack);
 				CurrentQueue.Remove(nextTrack);
 
-				await context.Respond($"```Now playing {nextTrack.Title}!```");
+				await context.RespondAsync($"```Now playing {nextTrack.Title}!```");
 			}
 			else
 			{
@@ -167,13 +167,13 @@ namespace PizzaBotGG.App.Modules.Music.Services
 		{
 			if (LavalinkGuildConnection.CurrentState.CurrentTrack == null)
 			{
-				await context.Respond("There are no tracks loaded.");
+				await context.RespondAsync("There are no tracks loaded.");
 				return;
 			}
 
 			if (CurrentQueue.Count == 0)
 			{
-				await context.Respond("There are no tracks queued");
+				await context.RespondAsync("There are no tracks queued");
 			}
 			else
 			{
@@ -184,7 +184,7 @@ namespace PizzaBotGG.App.Modules.Music.Services
 					sb.Append($"{track.Title}\t\t{track.Length}\n").AppendLine();
 				}
 				sb.Append("```");
-				await context.Respond(sb.ToString());
+				await context.RespondAsync(sb.ToString());
 			}
 		}
 
@@ -192,7 +192,7 @@ namespace PizzaBotGG.App.Modules.Music.Services
 		{
 			CurrentQueue = new List<LavalinkTrack>();
 			await LavalinkGuildConnection.StopAsync();
-			await context.Respond("```Queue cleared```");
+			await context.RespondAsync("```Queue cleared```");
 		}
 
 		public async Task Stats(SlashContext context)
@@ -207,7 +207,7 @@ namespace PizzaBotGG.App.Modules.Music.Services
 				.Append("RAM Usage:                 ").AppendFormat("{0} allocated / {1} used / {2} free / {3} reservable", SizeToString(stats.RamAllocated), SizeToString(stats.RamUsed), SizeToString(stats.RamFree), SizeToString(stats.RamReservable)).AppendLine()
 				.Append("Audio frames (per minute): ").AppendFormat("{0:#,##0} sent / {1:#,##0} nulled / {2:#,##0} deficit", stats.AverageSentFramesPerMinute, stats.AverageNulledFramesPerMinute, stats.AverageDeficitFramesPerMinute).AppendLine()
 				.Append("```");
-			await context.Respond(sb.ToString()).ConfigureAwait(false);
+			await context.RespondAsync(sb.ToString()).ConfigureAwait(false);
 		}
 
 		private static string[] Units = new[] { "", "ki", "Mi", "Gi" };

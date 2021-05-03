@@ -1,4 +1,5 @@
-﻿using DSharpPlus.Entities;
+﻿using DSharpPlus;
+using DSharpPlus.Entities;
 using PizzaBotGG.App.ExceptionHandling;
 using PizzaBotGG.App.Modules.Waifu.Apis;
 using PizzaBotGG.App.Modules.Waifu.Enums;
@@ -41,7 +42,12 @@ namespace PizzaBotGG.App.Modules.Waifu.Services
 			try
 			{
 				var waifuResponse = await _waifuApi.GetWaifu(waifuType, waifuCategory);
-				return GetWaifuEmbed(waifuResponse);
+
+				var builder = new DiscordEmbedBuilder();
+				builder.ImageUrl = waifuResponse.Url;
+				var embed = builder.Build();
+
+				return embed;
 			}
 			catch (RestEase.ApiException apiException)
 			{
@@ -54,20 +60,6 @@ namespace PizzaBotGG.App.Modules.Waifu.Services
 			}
 		}
 
-		public Task<string> GetSFWWaifuCategories(string categoryName)
-		{
-			throw new NotImplementedException();
-		}
-
-		private static DiscordEmbed GetWaifuEmbed(WaifuResponse waifuResponse)
-		{
-			var builder = new DiscordEmbedBuilder();
-			builder.ImageUrl = waifuResponse.Url;
-			var embed = builder.Build();
-
-			return embed;
-		}
-
 		private TWaifuCategory GetRandomCategory<TWaifuCategory>()
 			where TWaifuCategory : struct, Enum
 		{
@@ -75,7 +67,5 @@ namespace PizzaBotGG.App.Modules.Waifu.Services
 			var randomIndex = _randomService.Random(0, categories.Length - 1);
 			return categories[randomIndex];
 		}
-
-		
 	}
 }

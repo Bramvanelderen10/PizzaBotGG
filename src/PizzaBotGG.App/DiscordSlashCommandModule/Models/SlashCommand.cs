@@ -12,13 +12,16 @@ namespace PizzaBotGG.App.DiscordSlashCommandModule.Models
 			string description, 
 			Type moduleType,
 			MethodInfo methodInfo,
+			bool isNsfw,
 			params SlashCommandParameter[] parameters) : base(name, description, moduleType)
 		{
 			Parameters = parameters.ToList();
 			MethodInfo = methodInfo;
-		}
+            IsNsfw = isNsfw;
+        }
 
 		public List<SlashCommandParameter> Parameters { get; }
 		public MethodInfo MethodInfo { get; }
-	}
+        public bool IsNsfw { get; }
+    }
 }

@@ -24,7 +24,8 @@ namespace PizzaBotGG.App.Modules.Waifu
 			return embed;
 		}
 
-		[SlashCommand("nsfw", "adult images to keep kamal happy")]
+		[SlashCommand("nsfw", "adult images to keep Kamal happy")]
+		[SlashRequiresNsfw] 
 		public async Task<DiscordEmbed> WaifuNSFWImageCommand(WaifuNSFWCategory? category = null)
 		{
 			var embed = await _waifuService.GetNSFWWaifuEmbed(category);

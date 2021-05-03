@@ -55,16 +55,21 @@ namespace PizzaBotGG.App.DiscordSlashCommandModule
 			var builder = new DiscordInteractionResponseBuilder();
 			builder.WithContent("Processing command");
 			await e.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, builder);
+
+			var task = Task.Run(async () => await RunPipeline(sender, e.Interaction));
+		}
+
+		private async Task RunPipeline(DiscordClient client, DiscordInteraction interaction)
+		{
 			using (var scope = _serviceProvider.CreateScope())
 			{
 				var scopedProvider = scope.ServiceProvider;
 				var slashContext = new SlashContext(
-					e.Interaction, 
+					interaction, 
 					_baseSlashCommands,
 					scopedProvider,
-					sender);
-
-
+					client);
+				
 				var middlewareInstances = new List<ISlashCommandMiddleware>();
 				middlewareInstances.Add(_exceptionMiddleware);
 

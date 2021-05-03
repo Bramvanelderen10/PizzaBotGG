@@ -32,13 +32,14 @@ namespace PizzaBotGG.App.DiscordSlashCommandModule.Utilities
 					var commandAttribute = methodInfo.GetCustomAttribute<SlashCommandAttribute>();
 					if (commandAttribute == null) return null;
 
+					var isNsfwCommand = methodInfo.GetCustomAttribute<SlashRequiresNsfwAttribute>() is SlashRequiresNsfwAttribute;
 					var parameters = methodInfo.GetParameters();
 
 					var slashCommandParameters = parameters
 						.Select(parameter => new SlashCommandParameter(parameter.Name, parameter.ParameterType, parameter.IsOptional))
 						.ToArray();
 
-					return new SlashCommand(commandAttribute.Name, commandAttribute.Description, commandType, methodInfo, slashCommandParameters);
+					return new SlashCommand(commandAttribute.Name, commandAttribute.Description, commandType, methodInfo, isNsfwCommand, slashCommandParameters);
 				})
 				.Where(slashCommand => slashCommand != null)
 				.ToList();

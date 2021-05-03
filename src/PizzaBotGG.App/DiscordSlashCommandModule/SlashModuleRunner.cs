@@ -29,10 +29,10 @@ namespace PizzaBotGG.App.DiscordSlashCommandModule
 			var module = (SlashModule)ActivatorUtilities.CreateInstance(context.ServiceProvider, moduleType);
 			module.SlashContext = context;
 
-
 			//Run filters
 			var slashCommandContext = GetSlashCommandContext(baseCommand, data);
-			var method = slashCommandContext.CommandMethod;
+			var slashCommand = slashCommandContext.Command;
+			var method = slashCommand.MethodInfo;
 
 			var moduleFilters = moduleType.GetCustomAttributes(false)
 				.Select(attribute => attribute as SlashFilterAttribute)
@@ -51,7 +51,6 @@ namespace PizzaBotGG.App.DiscordSlashCommandModule
 				await filter.OnExecuting(context);
 			}
 
-			//Run method
 			await RunMethod(context, module, slashCommandContext, method);
 
 			filters.Reverse();
@@ -63,6 +62,12 @@ namespace PizzaBotGG.App.DiscordSlashCommandModule
 
 		private async Task RunMethod(SlashContext context, SlashModule module, SlashCommandContext slashCommandContext, System.Reflection.MethodInfo method)
 		{
+			if (!context.Interaction.Channel.IsNSFW && slashCommandContext.Command.IsNsfw)
+			{
+				await context.RespondAsync("Wrong channel BAKA!");
+				return;
+			}
+
 			var invokeTask = (Task)method.Invoke(module, slashCommandContext.Parameters);
 			await invokeTask.ConfigureAwait(false);
 			var prop = invokeTask.GetType().GetProperty("Result");
@@ -71,13 +76,18 @@ namespace PizzaBotGG.App.DiscordSlashCommandModule
 			if (taskResult is string stringResult)
 			{
 				var actualResult = string.IsNullOrEmpty(stringResult) ? "No result" : stringResult;
-				await context.Respond(actualResult);
+				
+				var builder = new DiscordEmbedBuilder();
+				builder.WithDescription(actualResult);
+				var stringEmbed = builder.Build();
+				
+				await context.RespondAsync(stringEmbed);
 				return;
 			}
 
 			if (taskResult is DiscordEmbed embed)
 			{
-				await context.Respond(embed);
+				await context.RespondAsync(embed);
 				return;
 			}
 
@@ -131,7 +141,7 @@ namespace PizzaBotGG.App.DiscordSlashCommandModule
 				return parameterOption.Value;
 			}).ToArray();
 
-			return new SlashCommandContext(command.MethodInfo, parameterValues);
+			return new SlashCommandContext(command, parameterValues);
 		}
 	}
 }

@@ -8,6 +8,5 @@ namespace PizzaBotGG.App.Modules.Waifu.Services
 	{
 		Task<DiscordEmbed> GetSFWWaifuEmbed(WaifuSFWCategory? category = null);
 		Task<DiscordEmbed> GetNSFWWaifuEmbed(WaifuNSFWCategory? category = null);
-		Task<string> GetSFWWaifuCategories(string categoryName);
 	}
 }

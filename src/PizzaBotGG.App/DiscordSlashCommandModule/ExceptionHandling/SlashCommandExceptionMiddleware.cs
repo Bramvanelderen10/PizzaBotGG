@@ -36,12 +36,12 @@ namespace PizzaBotGG.App.ExceptionHandling
 
 				if (exception is SlashCommandException slashCommandException)
 				{
-					await context.Respond(slashCommandException.Message);
+					await context.RespondAsync(slashCommandException.Message);
 					return;
 				}
 
 				//TODO add logging here. All exceptions need to be caught here OR ELSE THE PROGRAM CRASHES
-				await context.Respond("Exception occurred");
+				await context.RespondAsync("Exception occurred");
 			}
 		}
 	}

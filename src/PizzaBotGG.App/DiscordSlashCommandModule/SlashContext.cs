@@ -22,14 +22,14 @@ namespace PizzaBotGG.App.DiscordSlashCommandModule
 		public IServiceProvider ServiceProvider { get; }
 		public DiscordClient Client { get; }
 
-		public async Task Respond(string message)
+		public async Task RespondAsync(string message)
 		{
 			var webhookBuilder = new DiscordWebhookBuilder();
 			webhookBuilder.WithContent(message);
 			await Interaction.EditOriginalResponseAsync(webhookBuilder);
 		}
 
-		public async Task Respond(DiscordEmbed discordEmbed)
+		public async Task RespondAsync(DiscordEmbed discordEmbed)
 		{
 			var webhookBuilder = new DiscordWebhookBuilder();
 			webhookBuilder.AddEmbed(discordEmbed);

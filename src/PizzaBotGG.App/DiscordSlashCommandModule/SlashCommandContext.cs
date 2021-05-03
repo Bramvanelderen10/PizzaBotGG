@@ -1,16 +1,17 @@
 ﻿using System.Reflection;
+using PizzaBotGG.App.DiscordSlashCommandModule.Models;
 
 namespace PizzaBotGG.App.DiscordSlashCommandModule
 {
 	public class SlashCommandContext
 	{
-		public SlashCommandContext(MethodInfo commandMethod, object[] parameters)
+		public SlashCommandContext(SlashCommand command, object[] parameters)
 		{
-			CommandMethod = commandMethod;
+			Command = command;
 			Parameters = parameters;
 		}
 
-		public MethodInfo CommandMethod { get; }
+		public SlashCommand Command { get; }
 		public object[] Parameters { get; }
 	}
 }

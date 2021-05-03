@@ -16,6 +16,6 @@ namespace PizzaBotGG.App.Modules.Music.Attributes
 		{
 			var musicService = slashContext.ServiceProvider.GetService<IMusicService>();
 			await musicService.Connect(slashContext);
-		}
+		}    
 	}
 }
