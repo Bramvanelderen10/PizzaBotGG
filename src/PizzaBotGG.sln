@@ -5,16 +5,6 @@ VisualStudioVersion = 16.0.31112.23
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaBotGG.App", "PizzaBotGG.App\PizzaBotGG.App.csproj", "{6DFD2B73-84D7-4F54-B498-69C18C8EFEF5}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{4FA7979E-8F6D-4B79-A7C7-87474E9308DF}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DSharpPlus", "..\..\DSharpPlus\DSharpPlus\DSharpPlus.csproj", "{42976AEA-7636-4237-9738-785E905F326E}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DSharpPlus.Lavalink", "..\..\DSharpPlus\DSharpPlus.Lavalink\DSharpPlus.Lavalink.csproj", "{EA0BFBDC-DCBB-45DC-A789-AAB2935B794B}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DSharpPlus.Rest", "..\..\DSharpPlus\DSharpPlus.Rest\DSharpPlus.Rest.csproj", "{336A2152-13CE-4371-91C6-B2CC61A3A217}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DSharpPlus.SlashCommands", "..\..\DSharpPlus.SlashCommands\DSharpPlus.SlashCommands.csproj", "{852F7AE0-AEF1-4FC8-8DA9-401CE1700270}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,31 +15,9 @@ Global
 		{6DFD2B73-84D7-4F54-B498-69C18C8EFEF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6DFD2B73-84D7-4F54-B498-69C18C8EFEF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6DFD2B73-84D7-4F54-B498-69C18C8EFEF5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{42976AEA-7636-4237-9738-785E905F326E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{42976AEA-7636-4237-9738-785E905F326E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{42976AEA-7636-4237-9738-785E905F326E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{42976AEA-7636-4237-9738-785E905F326E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EA0BFBDC-DCBB-45DC-A789-AAB2935B794B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EA0BFBDC-DCBB-45DC-A789-AAB2935B794B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EA0BFBDC-DCBB-45DC-A789-AAB2935B794B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EA0BFBDC-DCBB-45DC-A789-AAB2935B794B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{336A2152-13CE-4371-91C6-B2CC61A3A217}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{336A2152-13CE-4371-91C6-B2CC61A3A217}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{336A2152-13CE-4371-91C6-B2CC61A3A217}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{336A2152-13CE-4371-91C6-B2CC61A3A217}.Release|Any CPU.Build.0 = Release|Any CPU
-		{852F7AE0-AEF1-4FC8-8DA9-401CE1700270}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{852F7AE0-AEF1-4FC8-8DA9-401CE1700270}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{852F7AE0-AEF1-4FC8-8DA9-401CE1700270}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{852F7AE0-AEF1-4FC8-8DA9-401CE1700270}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{42976AEA-7636-4237-9738-785E905F326E} = {4FA7979E-8F6D-4B79-A7C7-87474E9308DF}
-		{EA0BFBDC-DCBB-45DC-A789-AAB2935B794B} = {4FA7979E-8F6D-4B79-A7C7-87474E9308DF}
-		{336A2152-13CE-4371-91C6-B2CC61A3A217} = {4FA7979E-8F6D-4B79-A7C7-87474E9308DF}
-		{852F7AE0-AEF1-4FC8-8DA9-401CE1700270} = {4FA7979E-8F6D-4B79-A7C7-87474E9308DF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {94B90C49-89E5-43F2-A716-2131E065AA3F}
