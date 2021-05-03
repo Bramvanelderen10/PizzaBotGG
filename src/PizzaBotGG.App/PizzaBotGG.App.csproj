@@ -18,14 +18,11 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
     <PackageReference Include="MimeTypeMapOfficial" Version="1.0.15" />
     <PackageReference Include="RestEase" Version="1.5.4" />
+    <PackageReference Include="DSharpPlus" Version="4.0.1" />
+    <PackageReference Include="DSharpPlus.Rest" Version="4.0.1" />
+    <PackageReference Include="DSharpPlus.Lavalink" Version="4.0.1" />
   </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\DSharpPlus\DSharpPlus.Lavalink\DSharpPlus.Lavalink.csproj" />
-    <ProjectReference Include="..\..\..\DSharpPlus\DSharpPlus.Rest\DSharpPlus.Rest.csproj" />
-    <ProjectReference Include="..\..\..\DSharpPlus\DSharpPlus\DSharpPlus.csproj" />
-  </ItemGroup>
-
+  
   <ItemGroup>
     <None Update="Configuration\appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

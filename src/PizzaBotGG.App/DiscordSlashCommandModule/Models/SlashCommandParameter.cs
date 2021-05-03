@@ -6,7 +6,7 @@ namespace PizzaBotGG.App.DiscordSlashCommandModule.Models
 	{
 		public SlashCommandParameter(string name, Type parameterType, bool isOptional)
 		{
-			this.Name = name;
+			Name = name;
 			ParameterType = parameterType;
 			IsOptional = isOptional;
 		}
