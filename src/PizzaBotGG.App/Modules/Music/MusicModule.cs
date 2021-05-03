@@ -18,9 +18,10 @@ namespace PizzaBotGG.App.Modules.Music
 		}
 
 		[SlashCommand("play", "Plays music using either a song name or link")]
-		public async Task Play(string search)
+		public async Task<string> Play(string search)
 		{
 			await _musicService.Play(SlashContext, search);
+			return "Success";
 		}
 
 		[SlashCommand("skip", "Skips a song")]
