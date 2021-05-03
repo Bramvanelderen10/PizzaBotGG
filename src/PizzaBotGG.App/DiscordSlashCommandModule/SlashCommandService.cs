@@ -53,7 +53,7 @@ namespace PizzaBotGG.App.DiscordSlashCommandModule
 		private async Task OnInteractionCreated(DiscordClient sender, DSharpPlus.EventArgs.InteractionCreateEventArgs e)
 		{
 			var builder = new DiscordInteractionResponseBuilder();
-			builder.WithContent("Porcessing command");
+			builder.WithContent("Processing command");
 			await e.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, builder);
 			using (var scope = _serviceProvider.CreateScope())
 			{
