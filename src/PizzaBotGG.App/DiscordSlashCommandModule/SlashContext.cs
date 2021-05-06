@@ -24,16 +24,16 @@ namespace PizzaBotGG.App.DiscordSlashCommandModule
 
 		public async Task RespondAsync(string message)
 		{
-			var webhookBuilder = new DiscordWebhookBuilder();
-			webhookBuilder.WithContent(message);
-			await Interaction.EditOriginalResponseAsync(webhookBuilder);
+			var builder = new DiscordWebhookBuilder();
+			builder.WithContent(message);
+			await Interaction.EditOriginalResponseAsync(builder);
 		}
 
 		public async Task RespondAsync(DiscordEmbed discordEmbed)
 		{
-			var webhookBuilder = new DiscordWebhookBuilder();
-			webhookBuilder.AddEmbed(discordEmbed);
-			await Interaction.EditOriginalResponseAsync(webhookBuilder);
+			var builder = new DiscordWebhookBuilder();
+			builder.AddEmbed(discordEmbed);
+			await Interaction.EditOriginalResponseAsync(builder);
 		}
 	}
 }

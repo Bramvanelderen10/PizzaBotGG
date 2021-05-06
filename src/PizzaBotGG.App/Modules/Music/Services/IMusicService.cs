@@ -5,13 +5,12 @@ namespace PizzaBotGG.App.Modules.Music.Services
 {
 	public interface IMusicService
 	{
-		Task Connect(SlashContext context);
-		Task Play(SlashContext context, string search);
-		Task Skip(SlashContext context);
-		Task Pause(SlashContext context);
-		Task Unpause(SlashContext context);
-		Task Queue(SlashContext context);
-		Task Clear(SlashContext context);
-		Task Stats(SlashContext context);
+		Task<string> Clear(SlashContext context);
+        Task<string> Pause(SlashContext context);
+        Task<string> Play(SlashContext context, string search);
+        Task<string> Queue(SlashContext context);
+        Task<string> Skip(SlashContext context);
+        string Stats(SlashContext context);
+        Task<string> Unpause(SlashContext context);
 	}
 }

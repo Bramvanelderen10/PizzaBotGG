@@ -70,7 +70,12 @@ namespace PizzaBotGG.App.DiscordSlashCommandModule
 
 			var invokeTask = (Task)method.Invoke(module, slashCommandContext.Parameters);
 			await invokeTask.ConfigureAwait(false);
+
 			var prop = invokeTask.GetType().GetProperty("Result");
+
+			//If result prop is undefined it means it is a Task without return type
+			if (prop == null) return;
+
 			var taskResult = prop.GetValue(invokeTask);
 
 			if (taskResult is string stringResult)
@@ -88,6 +93,11 @@ namespace PizzaBotGG.App.DiscordSlashCommandModule
 			if (taskResult is DiscordEmbed embed)
 			{
 				await context.RespondAsync(embed);
+				return;
+			}
+
+			if (taskResult.GetType().Name == "VoidTaskResult")
+			{
 				return;
 			}
 

@@ -16,7 +16,8 @@ namespace PizzaBotGG.App.Modules.Kamal
         private static List<string> _quotes = new List<string> 
         {
             "Kut spel!",
-            "Wat een kut champion!"
+            "Wat een kut champion!",
+            "Hoeren neuken, nooit meer werken. Ik doe al 50%"
         };
         private readonly IRandomService _randomService;
 
