@@ -10,7 +10,7 @@ namespace PizzaBotGG.App.DiscordSlashCommandModule
 		{
 			var configuration = new SlashCommandConfiguration();
 			if (configureOptions != null) configureOptions(configuration);
-			
+
 			var slashCommandService = new SlashCommandService(client, configuration);
 			await slashCommandService.RegisterSlashCommands();
 

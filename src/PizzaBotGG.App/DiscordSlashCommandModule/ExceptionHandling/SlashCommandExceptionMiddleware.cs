@@ -21,10 +21,10 @@ namespace PizzaBotGG.App.ExceptionHandling
 			{
 				await next(context);
 			}
-			catch(Exception exception)
+			catch (Exception exception)
 			{
 				var errorContext = new SlashCommandErrorContext(context, exception);
-				foreach(var customExceptionHandler in _onExceptionHandlers)
+				foreach (var customExceptionHandler in _onExceptionHandlers)
 				{
 					customExceptionHandler(errorContext);
 				}

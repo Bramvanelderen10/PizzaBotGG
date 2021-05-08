@@ -8,8 +8,8 @@ namespace PizzaBotGG.App.DiscordSlashCommandModule.Models
 	public class SlashCommand : BaseSlashCommand
 	{
 		public SlashCommand(
-			string name, 
-			string description, 
+			string name,
+			string description,
 			Type moduleType,
 			MethodInfo methodInfo,
 			bool isNsfw,
@@ -17,11 +17,11 @@ namespace PizzaBotGG.App.DiscordSlashCommandModule.Models
 		{
 			Parameters = parameters.ToList();
 			MethodInfo = methodInfo;
-            IsNsfw = isNsfw;
-        }
+			IsNsfw = isNsfw;
+		}
 
 		public List<SlashCommandParameter> Parameters { get; }
 		public MethodInfo MethodInfo { get; }
-        public bool IsNsfw { get; }
-    }
+		public bool IsNsfw { get; }
+	}
 }

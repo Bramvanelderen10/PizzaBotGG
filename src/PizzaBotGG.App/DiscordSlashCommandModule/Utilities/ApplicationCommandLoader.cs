@@ -25,7 +25,7 @@ namespace PizzaBotGG.App.DiscordSlashCommandModule.Utilities
 		private static List<DiscordApplicationCommand> GetApplicationCommands(List<SlashCommandGroup> slashCommandGroups)
 		{
 			var applicationCommands = slashCommandGroups
-				.Select(slashCommandGroup => 
+				.Select(slashCommandGroup =>
 				{
 					var subCommands = GetApplicationSubCommands(slashCommandGroup.Children);
 					return new DiscordApplicationCommand(slashCommandGroup.Name, slashCommandGroup.Description, subCommands);
@@ -66,7 +66,7 @@ namespace PizzaBotGG.App.DiscordSlashCommandModule.Utilities
 
 				ApplicationCommandOptionType commandOptionType;
 				List<DiscordApplicationCommandOptionChoice> choices = null;
-				if (ApplicationCommandOptionTypeMap.ContainsKey(parameterType)) 
+				if (ApplicationCommandOptionTypeMap.ContainsKey(parameterType))
 				{
 					commandOptionType = ApplicationCommandOptionTypeMap[parameterType];
 				}

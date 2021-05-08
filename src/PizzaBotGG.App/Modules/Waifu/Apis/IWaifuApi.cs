@@ -9,7 +9,7 @@ namespace PizzaBotGG.App.Modules.Waifu.Apis
 	{
 		[Get("{type}/{category}")]
 		Task<WaifuResponse> GetWaifu<TWaifuCategory>(
-			[Path("type", PathSerializationMethod.Serialized)]WaifuType type, 
+			[Path("type", PathSerializationMethod.Serialized)] WaifuType type,
 			[Path("category", PathSerializationMethod.Serialized)] TWaifuCategory category)
 			where TWaifuCategory : struct, Enum;
 	}

@@ -15,67 +15,68 @@ using PizzaBotGG.App.DiscordSlashCommandModule;
 
 namespace PizzaBotGG.App
 {
-    public class Program
-    {
-        static void Main(string[] args)
+	public class Program
+	{
+		static void Main(string[] args)
 		{
-            MainAsync().Wait();
+			MainAsync().Wait();
 		}
 
-        static async Task MainAsync()
+		static async Task MainAsync()
 		{
-            var applicationConfiguration = GetConfiguration();
-            var discordSettings = applicationConfiguration.GetSection(nameof(DiscordSettings)).Get<DiscordSettings>();
-            var lavalinkSettings = applicationConfiguration.GetSection(nameof(LavalinkSettings)).Get<LavalinkSettings>();
+			var applicationConfiguration = GetConfiguration();
+			var discordSettings = applicationConfiguration.GetSection(nameof(DiscordSettings)).Get<DiscordSettings>();
+			var lavalinkSettings = applicationConfiguration.GetSection(nameof(LavalinkSettings)).Get<LavalinkSettings>();
 
-            var discordConfiguration = new DiscordConfiguration()
-            {
-                Token = discordSettings.Token,
-                TokenType = TokenType.Bot,
-                Intents = DiscordIntents.AllUnprivileged
-            };
+			var discordConfiguration = new DiscordConfiguration()
+			{
+				Token = discordSettings.Token,
+				TokenType = TokenType.Bot,
+				Intents = DiscordIntents.AllUnprivileged
+			};
 
 			var discordClient = new DiscordClient(discordConfiguration);
-            
 
-            var endpoint = new ConnectionEndpoint
-            {
-                Hostname = "127.0.0.1",
-                Port = 2333
-            };
 
-            var lavalinkConfig = new LavalinkConfiguration
-            {
-                Password = lavalinkSettings.Password,
-                RestEndpoint = endpoint,
-                SocketEndpoint = endpoint
-            };
+			var endpoint = new ConnectionEndpoint
+			{
+				Hostname = "127.0.0.1",
+				Port = 2333
+			};
 
-            var lavalink = discordClient.UseLavalink();
-            await discordClient.ConnectAsync();
-            await lavalink.ConnectAsync(lavalinkConfig);
-            var slashCommandService = await discordClient.AddSlashCommands(options => {
-                options.Services
-                    .AddWaifuModule()
-                    .AddCatModule()
-                    .AddMusicModule()
-                    .AddSingleton<IRandomService, RandomService>();
-            });
-            await Task.Delay(-1);
+			var lavalinkConfig = new LavalinkConfiguration
+			{
+				Password = lavalinkSettings.Password,
+				RestEndpoint = endpoint,
+				SocketEndpoint = endpoint
+			};
+
+			var lavalink = discordClient.UseLavalink();
+			await discordClient.ConnectAsync();
+			await lavalink.ConnectAsync(lavalinkConfig);
+			var slashCommandService = await discordClient.AddSlashCommands(options =>
+			{
+				options.Services
+					.AddWaifuModule()
+					.AddCatModule()
+					.AddMusicModule()
+					.AddSingleton<IRandomService, RandomService>();
+			});
+			await Task.Delay(-1);
 		}
 
 		static IConfiguration GetConfiguration()
 		{
-            var configurationBuilder = new ConfigurationBuilder();
+			var configurationBuilder = new ConfigurationBuilder();
 
-            configurationBuilder.SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("Configuration/appsettings.json", optional: false)
-                .AddJsonFile($"Configuration/User/appsettings.{Environment.MachineName}.json", optional: true)
-                .AddJsonFile($"Configuration/User/appsettings.{Environment.UserName}.json", optional: true)
-                .AddJsonFile($"Configuration/Environment/appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json", optional: true)
-                .AddEnvironmentVariables();
+			configurationBuilder.SetBasePath(Directory.GetCurrentDirectory())
+				.AddJsonFile("Configuration/appsettings.json", optional: false)
+				.AddJsonFile($"Configuration/User/appsettings.{Environment.MachineName}.json", optional: true)
+				.AddJsonFile($"Configuration/User/appsettings.{Environment.UserName}.json", optional: true)
+				.AddJsonFile($"Configuration/Environment/appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json", optional: true)
+				.AddEnvironmentVariables();
 
-            return configurationBuilder.Build();
-        }
+			return configurationBuilder.Build();
+		}
 	}
 }

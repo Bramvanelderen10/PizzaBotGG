@@ -16,6 +16,6 @@ namespace PizzaBotGG.App.Modules.Music.Attributes
 		{
 			var lavalinkService = slashContext.ServiceProvider.GetService<LavalinkService>();
 			await lavalinkService.Connect(slashContext);
-		}    
+		}
 	}
 }

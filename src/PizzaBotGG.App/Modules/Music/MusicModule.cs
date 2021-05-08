@@ -17,10 +17,10 @@ namespace PizzaBotGG.App.Modules.Music
 			_musicService = musicService;
 		}
 
-        [SlashCommand("play", "Plays music using either a song name or link")]
-        public async Task<string> Play(string search) => await _musicService.Play(SlashContext, search);
+		[SlashCommand("play", "Plays music using either a song name or link")]
+		public async Task<string> Play(string search) => await _musicService.Play(SlashContext, search);
 
-        [SlashCommand("skip", "Skips a song")]
+		[SlashCommand("skip", "Skips a song")]
 		public async Task<string> Skip() => await _musicService.Skip(SlashContext);
 
 		[SlashCommand("pause", "Pause a song")]
@@ -32,10 +32,10 @@ namespace PizzaBotGG.App.Modules.Music
 		[SlashCommand("queue", "Queue a song")]
 		public async Task<string> Queue() => await _musicService.Queue(SlashContext);
 
-        [SlashCommand("clear", "Clear the queue")]
-        public async Task<string> Clear() => await _musicService.Clear(SlashContext);
+		[SlashCommand("clear", "Clear the queue")]
+		public async Task<string> Clear() => await _musicService.Clear(SlashContext);
 
-        [SlashCommand("stats", "Displays Lavalink statistics.")]
-        public async Task<string> Stats() => _musicService.Stats(SlashContext);
-    }
+		[SlashCommand("stats", "Displays Lavalink statistics.")]
+		public async Task<string> Stats() => _musicService.Stats(SlashContext);
+	}
 }

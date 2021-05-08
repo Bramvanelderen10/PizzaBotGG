@@ -81,11 +81,11 @@ namespace PizzaBotGG.App.DiscordSlashCommandModule
 			if (taskResult is string stringResult)
 			{
 				var actualResult = string.IsNullOrEmpty(stringResult) ? "No result" : stringResult;
-				
+
 				var builder = new DiscordEmbedBuilder();
 				builder.WithDescription(actualResult);
 				var stringEmbed = builder.Build();
-				
+
 				await context.RespondAsync(stringEmbed);
 				return;
 			}

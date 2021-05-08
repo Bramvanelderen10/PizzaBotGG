@@ -49,6 +49,6 @@ namespace PizzaBotGG.App.Modules.Image
 			return catEmbed;
 		}
 
-		
+
 	}
 }

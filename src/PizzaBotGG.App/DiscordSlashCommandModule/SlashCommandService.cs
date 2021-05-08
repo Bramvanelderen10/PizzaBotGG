@@ -20,7 +20,7 @@ namespace PizzaBotGG.App.DiscordSlashCommandModule
 		private readonly SlashCommandExceptionMiddleware _exceptionMiddleware;
 
 		public SlashCommandService(
-			DiscordClient client, 
+			DiscordClient client,
 			SlashCommandConfiguration configuration)
 		{
 			_client = client;
@@ -39,7 +39,7 @@ namespace PizzaBotGG.App.DiscordSlashCommandModule
 
 			return baseSlashCommands;
 		}
-		
+
 
 		public async Task RegisterSlashCommands()
 		{
@@ -65,11 +65,11 @@ namespace PizzaBotGG.App.DiscordSlashCommandModule
 			{
 				var scopedProvider = scope.ServiceProvider;
 				var slashContext = new SlashContext(
-					interaction, 
+					interaction,
 					_baseSlashCommands,
 					scopedProvider,
 					client);
-				
+
 				var middlewareInstances = new List<ISlashCommandMiddleware>();
 				middlewareInstances.Add(_exceptionMiddleware);
 
