@@ -17,8 +17,8 @@ namespace PizzaBotGG.App.Modules.Image
 			_catService = catService;
 		}
 
-		[SlashCommand("random", "gets a random cat image")]
-		public async Task<DiscordEmbed> CatImageCommand(string breedName = null)
+		[SlashCommand("random", "Random cat")]
+		public async Task<DiscordEmbed> CatImageCommand(string breed = null)
 		{
 			var mimeTypes = new[]
 			{
@@ -26,26 +26,26 @@ namespace PizzaBotGG.App.Modules.Image
 				MimeTypeMap.GetMimeType("png"),
 			};
 
-			var catEmbed = await _catService.GetCatEmbed(mimeTypes, breedName);
+			var catEmbed = await _catService.GetCatEmbed(mimeTypes, breed);
 			return catEmbed;
 		}
 
-		[SlashCommand("breeds", "gets all breeds")]
-		public async Task<string> BreedsCommand(string breedName = null)
+		[SlashCommand("breeds", "Get all breeds")]
+		public async Task<string> BreedsCommand(string breed = null)
 		{
-			var breedsResponse = await _catService.GetBreedsResponse(breedName);
+			var breedsResponse = await _catService.GetBreedsResponse(breed);
 			return breedsResponse;
 		}
 
-		[SlashCommand("gif", "gets random cat gif")]
-		public async Task<DiscordEmbed> CatGifCommand(string breedName = null)
+		[SlashCommand("gif", "Get cat gif")]
+		public async Task<DiscordEmbed> CatGifCommand(string breed = null)
 		{
 			var mimeTypes = new[]
 			{
 				MimeTypeMap.GetMimeType("gif"),
 			};
 
-			var catEmbed = await _catService.GetCatEmbed(mimeTypes, breedName);
+			var catEmbed = await _catService.GetCatEmbed(mimeTypes, breed);
 			return catEmbed;
 		}
 
