@@ -1,10 +1,8 @@
 ﻿using DSharpPlus;
-using DSharpPlus.Entities;
 using DSharpPlus.Lavalink;
 using DSharpPlus.Lavalink.EventArgs;
 using PizzaBotGG.App.DiscordSlashCommandModule;
 using PizzaBotGG.App.ExceptionHandling;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,96 +10,6 @@ using System.Threading.Tasks;
 
 namespace PizzaBotGG.App.Modules.Music.Services
 {
-
-	public class LavalinkService
-	{
-
-		public LavalinkNodeConnection LavalinkNodeConnection { get; private set; }
-		public Dictionary<ulong, LavalinkGuildConnection> LavalinkGuildConnections { get; private set; }
-		private readonly List<Func<LavalinkGuildConnection, TrackFinishEventArgs, Task>> _onPlaybackFinishedListeners;
-
-		public LavalinkService()
-		{
-			LavalinkGuildConnections = new Dictionary<ulong, LavalinkGuildConnection>();
-			_onPlaybackFinishedListeners = new List<Func<LavalinkGuildConnection, TrackFinishEventArgs, Task>>();
-		}
-
-		public async Task Connect(SlashContext context)
-		{
-			var userId = context.Interaction.User.Id;
-			var guild = context.Interaction.Guild;
-
-			if (!guild.VoiceStates.ContainsKey(userId)) throw new SlashCommandException("You are not in a voice channel");
-
-			var voiceState = guild.VoiceStates[userId];
-
-			if (voiceState.Channel == null) throw new SlashCommandException("You are not in a voice channel");
-
-			var client = context.Client;
-
-			LavalinkNodeConnection = await GetLavalinkNodeConnection(context, voiceState);
-
-			//If there is already a guild connection then we are done
-			if (LavalinkGuildConnections.ContainsKey(guild.Id)) return;
-
-
-			var guildConnection = LavalinkNodeConnection.GetGuildConnection(guild);
-			if (guildConnection == null) throw new SlashCommandException("Lavalink is not connected.");
-			guildConnection.PlaybackFinished += PlaybackFinishedHandler;
-			LavalinkGuildConnections[guild.Id] = LavalinkNodeConnection.GetGuildConnection(guild);
-		}
-
-		public void AddOnPlaybackFinishedListener(Func<LavalinkGuildConnection, TrackFinishEventArgs, Task> onPlaybackFinishedListener)
-		{
-			_onPlaybackFinishedListeners.Add(onPlaybackFinishedListener);
-		}
-
-		private async Task PlaybackFinishedHandler(LavalinkGuildConnection sender, TrackFinishEventArgs e)
-		{
-			foreach (var listener in _onPlaybackFinishedListeners)
-			{
-				await listener.Invoke(sender, e);
-			}
-		}
-
-		private async Task<LavalinkNodeConnection> GetLavalinkNodeConnection(SlashContext context, DiscordVoiceState voiceState)
-		{
-			//Connection already establish just return it
-			if (LavalinkNodeConnection != null) return LavalinkNodeConnection;
-
-			var lava = context.Client.GetLavalink();
-			var channel = voiceState.Channel;
-
-			if (channel.Type != ChannelType.Voice) throw new SlashCommandException("Not a valid voice channel.");
-
-			if (!lava.ConnectedNodes.Any()) throw new SlashCommandException("The Lavalink connection is not established");
-
-			var lavalinkNodeConnection = lava.ConnectedNodes.Values.First();
-
-			//If already connected to a guild just return the connection
-			if (lavalinkNodeConnection.ConnectedGuilds.Any()) return lavalinkNodeConnection;
-
-			await lavalinkNodeConnection.ConnectAsync(channel);
-
-			return lavalinkNodeConnection;
-		}
-	}
-
-
-	public class GuildContext
-	{
-		public ulong GuildId { get; }
-		public List<LavalinkTrack> Queue { get; }
-		public DiscordChannel OriginalChannel { get; }
-
-		public GuildContext(ulong guildId, DiscordChannel originalChannel)
-		{
-			GuildId = guildId;
-			Queue = new List<LavalinkTrack>();
-			OriginalChannel = originalChannel;
-		}
-	}
-
 	public class MusicService : IMusicService
 	{
 		private readonly List<GuildContext> _guildContexts;
