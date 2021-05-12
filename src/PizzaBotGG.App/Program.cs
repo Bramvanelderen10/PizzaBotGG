@@ -19,7 +19,7 @@ namespace PizzaBotGG.App
 	{
 		static void Main(string[] args)
 		{
-			MainAsync().Wait();
+			MainAsync().GetAwaiter().GetResult();
 		}
 
 		static async Task MainAsync()
