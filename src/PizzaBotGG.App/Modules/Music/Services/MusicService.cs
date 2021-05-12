@@ -35,7 +35,7 @@ namespace PizzaBotGG.App.Modules.Music.Services
 			if (hasLoadFailed || hasNoLoadMatches) throw new SlashCommandException($"Track search failed for {search}.");
 
 			var guild = context.Interaction.Guild;
-			var guildConnection = _lavalinkService.LavalinkGuildConnections[guild.Id];
+			var guildConnection = _lavalinkService.LavalinkNodeConnection.ConnectedGuilds[guild.Id];
 
 			var guildContext = CreateGuildContext(guildConnection, context);
 			var track = loadResult.Tracks.First();
@@ -126,7 +126,7 @@ namespace PizzaBotGG.App.Modules.Music.Services
 		private LavalinkGuildConnection GetGuildConnection(SlashContext context)
 		{
 			var guildId = context.Interaction.GuildId.Value;
-			var guildConnection = _lavalinkService.LavalinkGuildConnections[guildId];
+			var guildConnection = _lavalinkService.LavalinkNodeConnection.ConnectedGuilds[guildId];
 			if (guildConnection.CurrentState.CurrentTrack == null) throw new SlashCommandException("There are no tracks loaded.");
 
 			return guildConnection;

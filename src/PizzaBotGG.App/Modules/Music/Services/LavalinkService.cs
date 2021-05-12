@@ -15,12 +15,10 @@ namespace PizzaBotGG.App.Modules.Music.Services
 	{
 
 		public LavalinkNodeConnection LavalinkNodeConnection { get; private set; }
-		public Dictionary<ulong, LavalinkGuildConnection> LavalinkGuildConnections { get; private set; }
 		private readonly List<Func<LavalinkGuildConnection, TrackFinishEventArgs, Task>> _onPlaybackFinishedListeners;
 
 		public LavalinkService()
 		{
-			LavalinkGuildConnections = new Dictionary<ulong, LavalinkGuildConnection>();
 			_onPlaybackFinishedListeners = new List<Func<LavalinkGuildConnection, TrackFinishEventArgs, Task>>();
 		}
 
@@ -40,13 +38,10 @@ namespace PizzaBotGG.App.Modules.Music.Services
 			LavalinkNodeConnection = await GetLavalinkNodeConnection(context, voiceState);
 
 			//If there is already a guild connection then we are done
-			if (LavalinkGuildConnections.ContainsKey(guild.Id)) return;
+			if (LavalinkNodeConnection.ConnectedGuilds.ContainsKey(guild.Id)) return;
 
-
-			var guildConnection = LavalinkNodeConnection.GetGuildConnection(guild);
-			if (guildConnection == null) throw new SlashCommandException("Lavalink is not connected.");
+			var guildConnection = LavalinkNodeConnection.ConnectedGuilds[guild.Id];
 			guildConnection.PlaybackFinished += PlaybackFinishedHandler;
-			LavalinkGuildConnections[guild.Id] = LavalinkNodeConnection.GetGuildConnection(guild);
 		}
 
 		public void AddOnPlaybackFinishedListener(Func<LavalinkGuildConnection, TrackFinishEventArgs, Task> onPlaybackFinishedListener)
@@ -64,8 +59,6 @@ namespace PizzaBotGG.App.Modules.Music.Services
 
 		private async Task<LavalinkNodeConnection> GetLavalinkNodeConnection(SlashContext context, DiscordVoiceState voiceState)
 		{
-			//Connection already establish just return it
-			if (LavalinkNodeConnection != null) return LavalinkNodeConnection;
 
 			var lava = context.Client.GetLavalink();
 			var channel = voiceState.Channel;
