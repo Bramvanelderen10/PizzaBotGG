@@ -41,7 +41,6 @@ namespace PizzaBotGG.App.Modules.Music.Services
 			if (LavalinkNodeConnection.ConnectedGuilds.ContainsKey(guild.Id)) return;
 
 			var guildConnection = LavalinkNodeConnection.ConnectedGuilds[guild.Id];
-			guildConnection.PlaybackFinished += PlaybackFinishedHandler;
 		}
 
 		public void AddOnPlaybackFinishedListener(Func<LavalinkGuildConnection, TrackFinishEventArgs, Task> onPlaybackFinishedListener)
@@ -59,7 +58,7 @@ namespace PizzaBotGG.App.Modules.Music.Services
 
 		private async Task<LavalinkNodeConnection> GetLavalinkNodeConnection(SlashContext context, DiscordVoiceState voiceState)
 		{
-
+			var guildId = context.Interaction.Guild.Id;
 			var lava = context.Client.GetLavalink();
 			var channel = voiceState.Channel;
 
@@ -70,9 +69,12 @@ namespace PizzaBotGG.App.Modules.Music.Services
 			var lavalinkNodeConnection = lava.ConnectedNodes.Values.First();
 
 			//If already connected to a guild just return the connection
-			if (lavalinkNodeConnection.ConnectedGuilds.Any()) return lavalinkNodeConnection;
+			if (lavalinkNodeConnection.ConnectedGuilds.ContainsKey(guildId)) return lavalinkNodeConnection;
 
 			await lavalinkNodeConnection.ConnectAsync(channel);
+
+			var guildConnection = lavalinkNodeConnection.ConnectedGuilds[guildId];
+			guildConnection.PlaybackFinished += PlaybackFinishedHandler;
 
 			return lavalinkNodeConnection;
 		}

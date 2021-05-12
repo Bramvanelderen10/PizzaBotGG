@@ -37,5 +37,8 @@ namespace PizzaBotGG.App.Modules.Music
 
 		[SlashCommand("stats", "Displays Lavalink statistics.")]
 		public async Task<string> Stats() => _musicService.Stats(SlashContext);
+
+		[SlashCommand("loop", "Toggle looping")]
+		public async Task<string> Loop() => _musicService.Loop(SlashContext);
 	}
 }

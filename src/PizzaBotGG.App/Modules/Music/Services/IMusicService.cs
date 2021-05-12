@@ -1,4 +1,5 @@
-﻿using PizzaBotGG.App.DiscordSlashCommandModule;
+﻿using DSharpPlus.Lavalink;
+using PizzaBotGG.App.DiscordSlashCommandModule;
 using System.Threading.Tasks;
 
 namespace PizzaBotGG.App.Modules.Music.Services
@@ -12,5 +13,7 @@ namespace PizzaBotGG.App.Modules.Music.Services
 		Task<string> Skip(SlashContext context);
 		string Stats(SlashContext context);
 		Task<string> Unpause(SlashContext context);
+		string Loop(SlashContext slashContext);
+		GuildContext UpdateGuildConnection(LavalinkGuildConnection guildConnection, SlashContext context);
 	}
 }

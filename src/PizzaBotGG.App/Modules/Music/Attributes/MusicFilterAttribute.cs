@@ -15,7 +15,14 @@ namespace PizzaBotGG.App.Modules.Music.Attributes
 		public override async Task OnExecuting(SlashContext slashContext)
 		{
 			var lavalinkService = slashContext.ServiceProvider.GetService<LavalinkService>();
+
 			await lavalinkService.Connect(slashContext);
+
+			var lavalinkConnection = lavalinkService.LavalinkNodeConnection;
+
+			var musicService = slashContext.ServiceProvider.GetService<IMusicService>();
+			var guildConnection = lavalinkConnection.ConnectedGuilds[slashContext.Interaction.Guild.Id];
+			musicService.UpdateGuildConnection(guildConnection, slashContext); 
 		}
 	}
 }

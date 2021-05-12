@@ -1,4 +1,5 @@
 ﻿using DSharpPlus;
+using DSharpPlus.Entities;
 using DSharpPlus.Lavalink;
 using DSharpPlus.Lavalink.EventArgs;
 using PizzaBotGG.App.DiscordSlashCommandModule;
@@ -21,7 +22,6 @@ namespace PizzaBotGG.App.Modules.Music.Services
 			_guildContexts = new List<GuildContext>();
 		}
 
-
 		public async Task<string> Play(SlashContext context, string search)
 		{
 			if (string.IsNullOrWhiteSpace(search)) throw new SlashCommandException("search something noob");
@@ -37,26 +37,26 @@ namespace PizzaBotGG.App.Modules.Music.Services
 			var guild = context.Interaction.Guild;
 			var guildConnection = _lavalinkService.LavalinkNodeConnection.ConnectedGuilds[guild.Id];
 
-			var guildContext = CreateGuildContext(guildConnection, context);
+			var guildContext = GetGuildContext(guildConnection);
 			var track = loadResult.Tracks.First();
+
+			guildContext.Queue.Add(track);
 
 			if (guildConnection.CurrentState.CurrentTrack == null)
 			{
 				await guildConnection.PlayAsync(track);
 
-
 				return $"Now playing {GetTrackDescription(track)}";
 			}
 			else
 			{
-				guildContext.Queue.Add(track);
 				return $"Queued {GetTrackDescription(track)}!";
 			}
 		}
 
-		private static string GetTrackDescription(LavalinkTrack track) => $"Now playing {Formatter.MaskedUrl(track.Title, track.Uri)}!";
+		private static string GetTrackDescription(LavalinkTrack track) => $"{Formatter.MaskedUrl(track.Title, track.Uri)}!";
 
-		private GuildContext CreateGuildContext(LavalinkGuildConnection guildConnection, SlashContext context)
+		public GuildContext UpdateGuildConnection(LavalinkGuildConnection guildConnection, SlashContext context)
 		{
 			var guild = guildConnection.Guild;
 			var guildContext = _guildContexts.SingleOrDefault(guildContext => guildContext.GuildId == guild.Id);
@@ -74,7 +74,12 @@ namespace PizzaBotGG.App.Modules.Music.Services
 		private GuildContext GetGuildContext(LavalinkGuildConnection guildConnection)
 		{
 			var guild = guildConnection.Guild;
-			var guildContext = _guildContexts.SingleOrDefault(guildContext => guildContext.GuildId == guild.Id);
+			return GetGuildContext(guild.Id);
+		}
+
+		private GuildContext GetGuildContext(ulong guildId)
+		{
+			var guildContext = _guildContexts.SingleOrDefault(guildContext => guildContext.GuildId == guildId);
 
 			if (guildContext == null) throw new SlashCommandException("No guild connection");
 
@@ -93,15 +98,27 @@ namespace PizzaBotGG.App.Modules.Music.Services
 			var guild = guildConnection.Guild;
 			var guildContext = GetGuildContext(guildConnection);
 
+			guildContext.QueueIndex++;
+
+			var queue = guildContext.Queue;
+			var isOutOfTracks = guildContext.QueueIndex >= queue.Count;
 			//If guild queue any then dont queue anything
-			if (!guildContext.Queue.Any())
+			if (isOutOfTracks)
 			{
-				await guildContext.OriginalChannel.SendMessageAsync("Queue finished");
-				return;
+				if (guildContext.IsLooping)
+				{
+					guildContext.QueueIndex = 0;
+				} 
+				else
+				{
+					await guildContext.OriginalChannel.SendMessageAsync("Queue finished");
+					guildContext.Queue.Clear();
+					guildContext.QueueIndex = 0;
+					return;
+				}
 			}
 
-			var nextTrack = guildContext.Queue.FirstOrDefault();
-			guildContext.Queue.Remove(nextTrack);
+			var nextTrack = queue[guildContext.QueueIndex];
 			await guildConnection.PlayAsync(nextTrack);
 			var nowPlaying = GetTrackDescription(nextTrack);
 			await guildContext.OriginalChannel.SendMessageAsync($"Playing: {GetTrackDescription(nextTrack)}");
@@ -200,6 +217,23 @@ namespace PizzaBotGG.App.Modules.Music.Services
 			}
 
 			return $"{d:#,##0.00} {Units[u]}B";
+		}
+
+		public string Loop(SlashContext slashContext)
+		{
+			var guildId = slashContext.Interaction.Guild.Id;
+			var guildContext = GetGuildContext(guildId);
+
+			guildContext.IsLooping = !guildContext.IsLooping;
+
+			return guildContext.IsLooping ? "Is now looping the queue": "Stopped loop";
+		}
+
+		public void Reset(DiscordGuild guild)
+		{
+			var guildId = guild.Id;
+			var guildContext = GetGuildContext(guildId);
+			guildContext.Reset();
 		}
 	}
 }
